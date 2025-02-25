@@ -1,0 +1,68 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 1000%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+  scrollbar-width: none; /* Hides scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hides scrollbar for IE/Edge */
+}
+
+.normal-scroll-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+body::-webkit-scrollbar {
+  display: none; /* Hides scrollbar for Chrome/Safari */
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: visible;
+  padding-bottom: 150vh; /* Allows enough scroll space */
+}
+
+.transition-element {
+  max-width: 800px;
+  margin: 100px 0;
+  padding: 20px;
+  text-align: center;
+  font-size: 2rem;
+  opacity: 0;
+  transition: transform 1s ease-out, opacity 1s ease-out;
+  position: fixed;
+  clip-path: inset(0 0 0 0);
+}
+
+/* Initial positions */
+.transition-element[data-direction="left"] {
+  transform: translateX(-100%);
+}
+.transition-element[data-direction="right"] {
+  transform: translateX(100%);
+}
+.transition-element[data-direction="up"] {
+  transform: translateY(-100%);
+}
+.transition-element[data-direction="down"] {
+  transform: translateY(100%);
+}
+
+/* When elements should be visible */
+.transition-element.visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}

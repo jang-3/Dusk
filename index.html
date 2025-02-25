@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="normal-scroll-section">
+      <h1>Scroll down to explore</h1>
+    </section>
+
+    <section class="normal-scroll-section">
+      <h1>Regular scrolling content</h1>
+    </section>
+
+    <div class="container">
+      <div
+        class="transition-element"
+        data-scroll="600"
+        data-range="500"
+        data-direction="right"
+      >
+        <h1>Welcome to My Portfolio</h1>
+      </div>
+      <div class="transition-element" data-scroll="1200" data-direction="left">
+        <h1>About Me</h1>
+      </div>
+      <div class="transition-element" data-scroll="1800" data-direction="up">
+        <h1>Projects</h1>
+      </div>
+      <div class="transition-element" data-scroll="2400" data-direction="down">
+        <h1>Contact</h1>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
