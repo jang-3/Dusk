@@ -13,6 +13,7 @@ html {
   font-family: Arial, sans-serif;
   scrollbar-width: none; /* Hides scrollbar for Firefox */
   -ms-overflow-style: none; /* Hides scrollbar for IE/Edge */
+  z-index: 1;
 }
 
 .normal-scroll-section {
@@ -26,21 +27,16 @@ body::-webkit-scrollbar {
 }
 
 .container {
-  position: relative;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   overflow: visible;
+  width: 100vw;
+  height: 100vh;
   padding-bottom: 150vh; /* Allows enough scroll space */
-}
-
-.transition-element {
-  position: fixed; /* Keeps the element centered while moving */
-  opacity: 0;
-  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
-  will-change: transform, opacity;
-  clip-path: (0, 0, 0, 0);
+  z-index: 10;
 }
 
 #aboutme {
@@ -49,22 +45,52 @@ body::-webkit-scrollbar {
   align-items: center;
 }
 
-/* Initial positions */
+#welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: grey;
+}
+
+.transition-element {
+  position: fixed; /* Keeps the element centered while moving */
+  opacity: 0;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  will-change: transform, opacity;
+}
+
+/* Initial positions based on data-direction and custom start offset */
 .transition-element[data-direction="left"] {
-  transform: translateX(-100%);
+  transform: translateX(var(--start-offset, -10vh));
 }
 .transition-element[data-direction="right"] {
-  transform: translateX(100%);
+  transform: translateX(var(--start-offset, 10vh));
 }
 .transition-element[data-direction="up"] {
-  transform: translateY(-100%);
+  transform: translateY(var(--start-offset, -10vh));
 }
 .transition-element[data-direction="down"] {
-  transform: translateY(100%);
+  transform: translateY(var(--start-offset, 10vh));
 }
 
 /* When elements should be visible */
 .transition-element.visible {
   opacity: 1;
   transform: translateX(0) translateY(0);
+}
+
+/* Exit positions using the same start offset but reversed */
+.transition-element:not(.visible)[data-direction="left"] {
+  transform: translateX(var(--exit-offset, -10vh));
+}
+.transition-element:not(.visible)[data-direction="right"] {
+  transform: translateX(var(--exit-offset, 10vh));
+}
+.transition-element:not(.visible)[data-direction="up"] {
+  transform: translateY(var(--exit-offset, -10vh));
+}
+.transition-element:not(.visible)[data-direction="down"] {
+  transform: translateY(var(--exit-offset, 10vh));
 }
