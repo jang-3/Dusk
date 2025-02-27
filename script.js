@@ -1,4 +1,31 @@
 document.addEventListener("DOMContentLoaded", function () {
+  createStars(200); // Adjust the number of stars as needed
+
+  function createStars(count) {
+    const body = document.getElementById("welcome");
+
+    for (let i = 0; i < count; i++) {
+      let star = document.createElement("div");
+      star.classList.add("star");
+
+      // Random position
+      let x = Math.random() * window.innerWidth;
+      let y = Math.random() * window.innerHeight;
+
+      // Random size and animation duration
+      let size = Math.random() * 3 + 1;
+      let duration = Math.random() * 3 + 2;
+
+      star.style.left = `${x}px`;
+      star.style.top = `${y}px`;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.animationDuration = `${duration}s`;
+
+      body.appendChild(star);
+    }
+  }
+
   const elements = document.querySelectorAll(".transition-element");
   let lastScrollPosition = window.scrollY;
   let isScrollingDown = true; // Default state
