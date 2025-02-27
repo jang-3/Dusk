@@ -1,19 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-  createStars(200); // Adjust the number of stars as needed
+  const bottom = document.getElementById("duskfall-bottom");
+  const sky = document.getElementById("sky");
+  const skyorange = document.getElementById("sky-orange");
+  const skyblue = document.getElementById("sky-blue");
+  const starsContainer = document.getElementById("stars-container");
+
+  // Create stars dynamically
+  createStars(300);
 
   function createStars(count) {
-    const body = document.getElementById("welcome");
-
     for (let i = 0; i < count; i++) {
       let star = document.createElement("div");
       star.classList.add("star");
 
-      // Random position
       let x = Math.random() * window.innerWidth;
-      let y = Math.random() * window.innerHeight;
-
-      // Random size and animation duration
-      let size = Math.random() * 3 + 1;
+      let y = (Math.random() * window.innerHeight) / 1.4;
+      let size = Math.random() * 3 + 0.2; // Star size varies from 1px to 4px
       let duration = Math.random() * 3 + 2;
 
       star.style.left = `${x}px`;
@@ -21,10 +23,49 @@ document.addEventListener("DOMContentLoaded", function () {
       star.style.width = `${size}px`;
       star.style.height = `${size}px`;
       star.style.animationDuration = `${duration}s`;
+      star.dataset.size = size; // Store size for parallax logic
 
-      body.appendChild(star);
+      starsContainer.appendChild(star);
     }
   }
+
+  function applyParallax() {
+    let scrollY = window.scrollY;
+
+    // Move bottom upwards the most
+    bottom.style.transform = `translateY(${-scrollY * 0.1}px)`;
+
+    // Move sky upwards slightly less
+    sky.style.transform = `translateY(${-scrollY * 0.2}px)`;
+    skyblue.style.transform = `translateY(${scrollY * 2}px)`;
+    skyorange.style.transform = `translateY(${-scrollY * 0.05}px)`;
+
+    document.querySelectorAll(".star").forEach((star) => {
+      let size = parseFloat(star.dataset.size);
+
+      // Make the movement drastically different
+      let movementFactor = 1 + size * 1000000; // Small stars move 5x, big stars up to 20x
+
+      star.style.transform = `translateY(${-scrollY * movementFactor}vh)`;
+    });
+  }
+
+  function animateEntrance() {
+    bottom.style.transition = "transform 1.5s ease-out";
+    sky.style.transition = "transform 1.5s ease-out";
+
+    bottom.style.transform = "translateY(0)";
+    sky.style.transform = "translateY(0)";
+
+    setTimeout(() => {
+      document.querySelectorAll(".star").forEach((star) => {
+        star.style.opacity = "1";
+      });
+    }, 1000);
+  }
+
+  window.addEventListener("scroll", applyParallax);
+  animateEntrance();
 
   const elements = document.querySelectorAll(".transition-element");
   let lastScrollPosition = window.scrollY;

@@ -28,20 +28,70 @@ html {
   z-index: 0;
 }
 
-#welcome-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  background-image: url("images/DuskfallBottom.png");
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 134%;
-}
-
 body::-webkit-scrollbar {
   display: none; /* Hides scrollbar for Chrome/Safari */
+}
+
+#parallax-container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#stars-container {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: 1; /* Stars are at the very back */
+  pointer-events: none;
+}
+
+#sky {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-image: url("images/DuskfallBGBlur.png");
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  z-index: 2; /* Sky overlays stars */
+  top: -10vh; /* Start slightly off-screen */
+}
+
+#sky-blue {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-image: url("images/BlueLayer.png");
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  z-index: 2; /* Sky overlays stars */
+  top: -5vh; /* Start slightly off-screen */
+}
+
+#sky-orange {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-image: url("images/OrangeLayer.png");
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  z-index: 2; /* Sky overlays stars */
+  top: -10vh; /* Start slightly off-screen */
+}
+
+#duskfall-bottom {
+  position: absolute;
+  width: 100%;
+  height: 30vh;
+  bottom: -6vh; /* Start slightly off-screen */
+  background-image: url("images/DuskfallBottom.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 3; /* Bottom overlays everything */
 }
 
 .star {
@@ -50,15 +100,36 @@ body::-webkit-scrollbar {
   border-radius: 50%;
   box-shadow: 0 0 5px white;
   animation: twinkle infinite alternate ease-in-out;
+  opacity: 0;
 }
 
 @keyframes twinkle {
   from {
     opacity: 0.1;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 0.5;
+    transform: scale(0.4);
+  }
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 5px white;
+  animation: twinkle infinite alternate ease-in-out;
+  opacity: 0;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.3;
     transform: scale(1);
   }
   to {
-    opacity: 0.3;
+    opacity: 1;
     transform: scale(1.2);
   }
 }
@@ -88,7 +159,6 @@ body::-webkit-scrollbar {
   align-items: center;
   height: 93vh;
   width: 100vw;
-  background-image: url("images/DuskfallBG.png");
   background-color: black;
   background-position: bottom center;
   background-repeat: no-repeat;
