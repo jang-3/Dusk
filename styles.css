@@ -105,6 +105,61 @@ body::-webkit-scrollbar {
   z-index: 3; /* Bottom overlays everything */
 }
 
+#clouds {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  bottom: 70px; /* Anchored at the bottom */
+  display: flex;
+  flex-direction: column; /* Stack clouds in layers */
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: none;
+  transition: transform 1s ease-in-out;
+}
+
+/* Grouping clouds based on depth */
+.cloud-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cloud-back {
+  height: 8vh;
+  transform: translateY(-10vh);
+}
+
+.cloud-front {
+  height: 20vh;
+}
+
+.cloud1 {
+  left: -15vw; /* Front Left */
+  z-index: 2;
+  transform: translate(-30vw, -5vh);
+}
+
+.cloud3 {
+  right: 15vw; /* Front Right */
+  z-index: 2;
+  transform: translateY(3vh);
+}
+
+.cloud2 {
+  left: -5vw; /* Back Left */
+  z-index: 3;
+  transform: translate(-13vw, -11vh);
+}
+
+.cloud4 {
+  right: -5vw; /* Back Right */
+  z-index: 2;
+  transform: translateY(-7vh);
+}
+
 .star {
   position: absolute;
   background-color: white;
