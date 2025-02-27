@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const sky = document.getElementById("sky");
   const skyorange = document.getElementById("sky-orange");
   const skyblue = document.getElementById("sky-blue");
+  const welcome = document.getElementById("welcome-text");
   const starsContainer = document.getElementById("stars-container");
 
   // Create stars dynamically
@@ -31,35 +32,76 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function applyParallax() {
     let scrollY = window.scrollY;
+    let windowHeight = window.innerHeight;
+    let parallaxSection = starsContainer.parentElement;
+    let sectionTop = parallaxSection.offsetTop;
+    let sectionBottom = sectionTop + parallaxSection.offsetHeight;
 
     // Move bottom upwards the most
-    bottom.style.transform = `translateY(${-scrollY * 0.1}px)`;
+    bottom.style.transform = `translateY(${-scrollY * 0.05}px)`;
 
     // Move sky upwards slightly less
     sky.style.transform = `translateY(${-scrollY * 0.2}px)`;
     skyblue.style.transform = `translateY(${scrollY * 2}px)`;
     skyorange.style.transform = `translateY(${-scrollY * 0.05}px)`;
+    welcome.style.transform = `translateY(${-scrollY * 300}px)`;
+
+    let newHeight = Math.max(50, 100 - scrollY * 0.1); // Minimum height 50vh
+    skyblue.style.height = `${newHeight}vh`;
 
     document.querySelectorAll(".star").forEach((star) => {
       let size = parseFloat(star.dataset.size);
-
-      // Make the movement drastically different
-      let movementFactor = 1 + size * 1000000; // Small stars move 5x, big stars up to 20x
-
+      let movementFactor = 5 + size * 1000000; // Small stars move 5x, big stars up to 20x
       star.style.transform = `translateY(${-scrollY * movementFactor}vh)`;
+    });
+
+    // Restart star animation only when scrolling back to the section
+    if (scrollY + windowHeight > sectionTop && scrollY < sectionBottom) {
+      restartStarAnimation();
+    }
+  }
+
+  function restartStarAnimation() {
+    document.querySelectorAll(".star").forEach((star, index) => {
+      star.style.animation = "none"; // Remove animation
+      void star.offsetWidth; // Force reflow
+
+      // Apply a unique animation name to force a hard reset
+      let uniqueAnimation = `twinkle-${Date.now()}-${index}`;
+      star.style.animation = `${uniqueAnimation} 3s infinite alternate ease-in-out`;
+
+      // Create a new keyframe animation dynamically
+      let styleSheet = document.styleSheets[0];
+      styleSheet.insertRule(
+        `
+        @keyframes ${uniqueAnimation} {
+          from {
+            opacity: 0.1;
+            transform: scale(0.2);
+          }
+          to {
+            opacity: 0.7;
+            transform: scale(0.4);
+          }
+        }
+      `,
+        styleSheet.cssRules.length
+      );
     });
   }
 
   function animateEntrance() {
     bottom.style.transition = "transform 1.5s ease-out";
-    sky.style.transition = "transform 1.5s ease-out";
+    skyblue.style.transition = "transform 1.5s ease-out";
+    skyorange.style.transition = "transform 2s ease-out";
 
     bottom.style.transform = "translateY(0)";
-    sky.style.transform = "translateY(0)";
+    skyblue.style.transform = "translateY(0)";
+    skyorange.style.transform = "translateY(0)";
 
     setTimeout(() => {
       document.querySelectorAll(".star").forEach((star) => {
-        star.style.opacity = "1";
+        star.style.opacity = "0.1";
       });
     }, 1000);
   }
