@@ -37,6 +37,11 @@ body::-webkit-scrollbar {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1500px; /* ✅ Enables depth effect */
+  transform-style: preserve-3d;
 }
 
 #stars-container {
@@ -44,10 +49,13 @@ body::-webkit-scrollbar {
   width: 100%;
   height: 100vh;
   z-index: 1; /* Stars are at the very back */
+  transform: translateZ(-1000px) scale(2);
   pointer-events: none;
+  will-change: transform;
 }
 
 #welcome-text {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,18 +64,6 @@ body::-webkit-scrollbar {
   z-index: 50;
   opacity: 0;
   color: white;
-}
-
-#sky {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  background-image: url("images/DuskfallBGBlur.png");
-  background-size: cover;
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  z-index: 2; /* Sky overlays stars */
-  top: -10vh; /* Start slightly off-screen */
 }
 
 #sky-blue {
@@ -79,7 +75,9 @@ body::-webkit-scrollbar {
   background-position: bottom center;
   background-repeat: no-repeat;
   z-index: 2; /* Sky overlays stars */
+  transform: translateZ(-700px) scale(1.6);
   top: -5vh; /* Start slightly off-screen */
+  will-change: transform;
 }
 
 #sky-orange {
@@ -91,7 +89,9 @@ body::-webkit-scrollbar {
   background-position: bottom center;
   background-repeat: no-repeat;
   z-index: 2; /* Sky overlays stars */
-  top: -6.3vh; /* Start slightly off-screen */
+  transform: translateZ(-300px) scale(1.3);
+  top: -10.3vh; /* Start slightly off-screen */
+  will-change: transform;
 }
 
 #duskfall-bottom {
@@ -102,62 +102,77 @@ body::-webkit-scrollbar {
   background-image: url("images/DuskfallBottom.png");
   background-size: cover;
   background-repeat: no-repeat;
-  z-index: 3; /* Bottom overlays everything */
+  z-index: 20; /* Bottom overlays everything */
+  will-change: transform;
 }
 
-#clouds {
+/* Ensure cloud images are correctly positioned */
+.cloud {
+  pointer-events: none; /* Prevent interaction */
+}
+
+#cloudcontainer {
   position: absolute;
-  width: 100%;
-  height: 100vh;
-  bottom: 70px; /* Anchored at the bottom */
-  display: flex;
-  flex-direction: column; /* Stack clouds in layers */
-  align-items: center;
-  justify-content: flex-end;
-  pointer-events: none;
-  transition: transform 1s ease-in-out;
+  width: 120vw;
+  height: 95vh;
+  display: grid;
+  place-items: center;
+  z-index: 10;
 }
 
-/* Grouping clouds based on depth */
-.cloud-group {
-  position: relative;
+#cloudcontainer > * {
+  grid-area: 1 / 1;
+  position: absolute; /* Ensures stacking */
+}
+
+#cloud-front {
+  bottom: 15vh;
+  width: 100vw;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  width: 100%;
 }
 
-.cloud-back {
-  height: 8vh;
-  transform: translateY(-10vh);
+#cloud-back {
+  bottom: 12vh;
+  width: 120vw;
+  height: 60vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
-.cloud-front {
+#cloud1,
+#cloud2,
+#cloud3,
+#cloud4 {
+  background-size: contain;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  z-index: 5;
+  will-change: transform;
+}
+
+#cloud1 {
+  background-image: url("images/Cloud1.png");
+  width: 70vw;
   height: 20vh;
 }
 
-.cloud1 {
-  left: -15vw; /* Front Left */
-  z-index: 2;
-  transform: translate(-30vw, -5vh);
+#cloud3 {
+  background-image: url("images/Cloud3.png");
+  width: 50vw;
+  height: 20vh;
 }
 
-.cloud3 {
-  right: 15vw; /* Front Right */
-  z-index: 2;
-  transform: translateY(3vh);
+#cloud2 {
+  background-image: url("images/Cloud2.png");
+  width: 60vh;
 }
 
-.cloud2 {
-  left: -5vw; /* Back Left */
-  z-index: 3;
-  transform: translate(-13vw, -11vh);
-}
-
-.cloud4 {
-  right: -5vw; /* Back Right */
-  z-index: 2;
-  transform: translateY(-7vh);
+#cloud4 {
+  background-image: url("images/Cloud4.png");
+  width: 50vw;
+  height: 10vh;
 }
 
 .star {
@@ -165,7 +180,9 @@ body::-webkit-scrollbar {
   background-color: white;
   border-radius: 50%;
   box-shadow: 0 0 5px white;
-  animation: twinkle infinite alternate ease-in-out;
+  animation: twinkle var(--animation-duration, 3s) infinite alternate
+    ease-in-out;
+  animation-delay: var(--animation-delay, 0s);
   opacity: 0;
 }
 
@@ -178,15 +195,6 @@ body::-webkit-scrollbar {
     opacity: 0.7;
     transform: scale(0.4);
   }
-}
-
-.star {
-  position: absolute;
-  background-color: white;
-  border-radius: 50%;
-  box-shadow: 0 0 5px white;
-  animation: twinkle infinite alternate ease-in-out;
-  opacity: 0;
 }
 
 .container {

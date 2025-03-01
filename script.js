@@ -1,10 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
   const bottom = document.getElementById("duskfall-bottom");
-  const sky = document.getElementById("sky");
-  const skyorange = document.getElementById("sky-orange");
   const skyblue = document.getElementById("sky-blue");
+  const skyorange = document.getElementById("sky-orange");
   const welcome = document.getElementById("welcome-text");
   const starsContainer = document.getElementById("stars-container");
+
+  const cloudFront = document.getElementById("cloud-front");
+  const cloudBack = document.getElementById("cloud-back");
+
+  let ticking = false;
+  let tickingTransitions = false;
+  let lastScrollPosition = window.scrollY;
+  let isScrollingDown = true;
 
   // Create stars dynamically
   createStars(300);
@@ -16,14 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let x = Math.random() * window.innerWidth;
       let y = (Math.random() * window.innerHeight) / 1.4;
-      let size = Math.random() * 3 + 0.2; // Star size varies from 1px to 4px
-      let duration = Math.random() * 3 + 2;
+      let size = Math.random() * 3 + 0.2; // Star size varies from 0.2px to 3.2px
 
       star.style.left = `${x}px`;
       star.style.top = `${y}px`;
       star.style.width = `${size}px`;
       star.style.height = `${size}px`;
-      star.style.animationDuration = `${duration}s`;
       star.dataset.size = size; // Store size for parallax logic
 
       starsContainer.appendChild(star);
@@ -31,63 +36,40 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function applyParallax() {
-    let scrollY = window.scrollY;
-    let windowHeight = window.innerHeight;
-    let parallaxSection = starsContainer.parentElement;
-    let sectionTop = parallaxSection.offsetTop;
-    let sectionBottom = sectionTop + parallaxSection.offsetHeight;
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        let scrollY = window.scrollY;
+        const stars = document.querySelectorAll(".star");
+        stars.forEach((star) => {
+          const delay = Math.random() * 10 + "s"; // Random delay between 0s and 10s
+          const duration = Math.random() * 3 + 2 + "s"; // Random duration between 2s and 5s
 
-    // Move bottom upwards the most
-    bottom.style.transform = `translateY(${-scrollY * 0.05}px)`;
+          star.style.setProperty("--animation-delay", delay);
+          star.style.setProperty("--animation-duration", duration);
+        });
 
-    // Move sky upwards slightly less
-    sky.style.transform = `translateY(${-scrollY * 0.2}px)`;
-    skyblue.style.transform = `translateY(${scrollY * 2}px)`;
-    skyorange.style.transform = `translateY(${-scrollY * 0.05}px)`;
-    welcome.style.transform = `translateY(${-scrollY * 300}px)`;
+        // Move bottom upwards the most
+        bottom.style.transform = `translateY(${-scrollY * 0.05}px)`;
 
-    let newHeight = Math.max(50, 100 - scrollY * 0.1); // Minimum height 50vh
-    skyblue.style.height = `${newHeight}vh`;
+        // Move sky upwards slightly less
+        skyblue.style.transform = `translateY(${scrollY * 0.3}px)`;
+        skyorange.style.transform = `translateY(${scrollY * 0.1}px)`;
 
-    document.querySelectorAll(".star").forEach((star) => {
-      let size = parseFloat(star.dataset.size);
-      let movementFactor = 5 + size * 1000000; // Small stars move 5x, big stars up to 20x
-      star.style.transform = `translateY(${-scrollY * movementFactor}vh)`;
-    });
+        // Clouds parallax effect
+        cloudFront.style.transform = `translateY(${scrollY * 0.1}px)`;
+        cloudBack.style.transform = `translateY(${scrollY * 0.15}px)`;
 
-    // Restart star animation only when scrolling back to the section
-    if (scrollY + windowHeight > sectionTop && scrollY < sectionBottom) {
-      restartStarAnimation();
+        ticking = false;
+      });
+      ticking = true;
+
+      // Parallax effect for stars
+      document.querySelectorAll(".star").forEach((star) => {
+        let size = parseFloat(star.dataset.size);
+        let movementFactor = 0.1 + size * 0.5;
+        star.style.transform = `translateY(${-scrollY * movementFactor}px)`;
+      });
     }
-  }
-
-  function restartStarAnimation() {
-    document.querySelectorAll(".star").forEach((star, index) => {
-      star.style.animation = "none"; // Remove animation
-      void star.offsetWidth; // Force reflow
-
-      // Apply a unique animation name to force a hard reset
-      let uniqueAnimation = `twinkle-${Date.now()}-${index}`;
-      star.style.animation = `${uniqueAnimation} 3s infinite alternate ease-in-out`;
-
-      // Create a new keyframe animation dynamically
-      let styleSheet = document.styleSheets[0];
-      styleSheet.insertRule(
-        `
-        @keyframes ${uniqueAnimation} {
-          from {
-            opacity: 0.1;
-            transform: scale(0.2);
-          }
-          to {
-            opacity: 0.7;
-            transform: scale(0.4);
-          }
-        }
-      `,
-        styleSheet.cssRules.length
-      );
-    });
   }
 
   function animateEntrance() {
@@ -106,58 +88,61 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 1000);
   }
 
-  window.addEventListener("scroll", applyParallax);
-  animateEntrance();
-
-  const elements = document.querySelectorAll(".transition-element");
-  let lastScrollPosition = window.scrollY;
-  let isScrollingDown = true; // Default state
-
   function updateElementPositions() {
-    const scrollPosition = window.scrollY + window.innerHeight * 0.7; // Trigger when 70% in view
+    if (!tickingTransitions) {
+      requestAnimationFrame(() => {
+        const scrollPosition = window.scrollY + window.innerHeight * 0.7;
 
-    // Detect scroll direction
-    isScrollingDown = window.scrollY > lastScrollPosition;
-    lastScrollPosition = window.scrollY;
+        // Detect scroll direction
+        isScrollingDown = window.scrollY > lastScrollPosition;
+        lastScrollPosition = window.scrollY;
 
-    elements.forEach((element) => {
-      const triggerPoint = parseInt(element.getAttribute("data-scroll"), 10);
-      const rangePoint = parseInt(
-        element.getAttribute("data-range") || 800,
-        10
-      );
-      const enterDirection = element.getAttribute("data-direction");
-      const exitDirection = element.getAttribute("data-out") || enterDirection;
-      const startOffset = element.getAttribute("data-start") || "10vh";
-      const waitTime = parseInt(element.getAttribute("data-wait") || 0, 10);
-
-      if (
-        scrollPosition >= triggerPoint &&
-        scrollPosition < triggerPoint + rangePoint
-      ) {
-        if (!element.classList.contains("visible")) {
-          setTimeout(() => {
-            element.classList.add("visible");
-            element.style.opacity = "1";
-            element.style.transform = "translate(0, 0)";
-          }, waitTime);
-        }
-      } else {
-        if (element.classList.contains("visible")) {
-          element.classList.remove("visible");
-          element.style.opacity = "0";
-
-          // Apply transition direction based on scroll direction
-          const transitionDirection = isScrollingDown
-            ? exitDirection
-            : enterDirection;
-          element.style.transform = getTransformValue(
-            transitionDirection,
-            startOffset
+        document.querySelectorAll(".transition-element").forEach((element) => {
+          const triggerPoint = parseInt(
+            element.getAttribute("data-scroll"),
+            10
           );
-        }
-      }
-    });
+          const rangePoint = parseInt(
+            element.getAttribute("data-range") || 800,
+            10
+          );
+          const enterDirection = element.getAttribute("data-direction");
+          const exitDirection =
+            element.getAttribute("data-out") || enterDirection;
+          const startOffset = element.getAttribute("data-start") || "10vh";
+          const waitTime = parseInt(element.getAttribute("data-wait") || 0, 10);
+
+          if (
+            scrollPosition >= triggerPoint &&
+            scrollPosition < triggerPoint + rangePoint
+          ) {
+            if (!element.classList.contains("visible")) {
+              setTimeout(() => {
+                element.classList.add("visible");
+                element.style.opacity = "1";
+                element.style.transform = "translate(0, 0)";
+              }, waitTime);
+            }
+          } else {
+            if (element.classList.contains("visible")) {
+              element.classList.remove("visible");
+              element.style.opacity = "0";
+
+              const transitionDirection = isScrollingDown
+                ? exitDirection
+                : enterDirection;
+              element.style.transform = getTransformValue(
+                transitionDirection,
+                startOffset
+              );
+            }
+          }
+        });
+
+        tickingTransitions = false;
+      });
+      tickingTransitions = true;
+    }
   }
 
   function getTransformValue(direction, offset) {
@@ -175,6 +160,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  window.addEventListener("scroll", applyParallax);
   window.addEventListener("scroll", updateElementPositions);
+
+  animateEntrance();
   updateElementPositions();
 });

@@ -66,6 +66,8 @@ function SmoothScroll(target, speed, smooth) {
   })();
 }
 
+/*
+
 window.onscroll = function () {
   myFunction();
 };
@@ -95,3 +97,4 @@ const hiddenElements = document.querySelectorAll(".content > *");
 hiddenElements.forEach((el) => observer.observe(el));
 const hiddenElements2 = document.querySelectorAll(".selected");
 hiddenElements2.forEach((el2) => observer.observe(el2));
+*/
