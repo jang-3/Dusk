@@ -39,14 +39,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!ticking) {
       requestAnimationFrame(() => {
         let scrollY = window.scrollY;
-        const stars = document.querySelectorAll(".star");
-        stars.forEach((star) => {
-          const delay = Math.random() * 10 + "s"; // Random delay between 0s and 10s
-          const duration = Math.random() * 3 + 2 + "s"; // Random duration between 2s and 5s
-
-          star.style.setProperty("--animation-delay", delay);
-          star.style.setProperty("--animation-duration", duration);
-        });
+        let windowHeight = window.innerHeight;
+        let parallaxSection = starsContainer.parentElement;
+        let sectionTop = parallaxSection.offsetTop;
+        let sectionBottom = sectionTop + parallaxSection.offsetHeight;
 
         // Move bottom upwards the most
         bottom.style.transform = `translateY(${-scrollY * 0.05}px)`;
@@ -68,7 +64,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let size = parseFloat(star.dataset.size);
         let movementFactor = 0.1 + size * 0.5;
         star.style.transform = `translateY(${-scrollY * movementFactor}px)`;
+        const delay = Math.random() * 10 + "s"; // Random delay between 0s and 10s
+        const duration = Math.random() * 3 + 2 + "s"; // Random duration between 2s and 5s
+
+        star.style.setProperty("--animation-delay", delay);
+        star.style.setProperty("--animation-duration", duration);
       });
+
+      if (scrollY + windowHeight > sectionTop && scrollY < sectionBottom) {
+        restartStarAnimation();
+      }
     }
   }
 
