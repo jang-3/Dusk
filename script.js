@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
         bottom.style.transform = `translateY(${-scrollY * 0.05}px)`;
 
         // Move sky upwards slightly less
-        skyblue.style.transform = `translateY(${scrollY * 0.3}px)`;
-        skyorange.style.transform = `translateY(${scrollY * 0.1}px)`;
+        skyblue.style.transform = `translateY(${scrollY * 0.2}px)`;
+        skyorange.style.transform = `translateY(${scrollY * 0.07}px)`;
 
         // Clouds parallax effect
         cloudFront.style.transform = `translateY(${scrollY * 0.1}px)`;

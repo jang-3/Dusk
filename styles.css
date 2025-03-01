@@ -161,12 +161,14 @@ body::-webkit-scrollbar {
 #cloud3 {
   background-image: url("images/Cloud3.png");
   width: 50vw;
-  height: 20vh;
+  height: 40vh;
+  margin-bottom: 7vh;
 }
 
 #cloud2 {
   background-image: url("images/Cloud2.png");
-  width: 60vh;
+  width: 67vh;
+  margin-bottom: 15px;
 }
 
 #cloud4 {
@@ -180,7 +182,7 @@ body::-webkit-scrollbar {
   background-color: white;
   border-radius: 50%;
   box-shadow: 0 0 5px white;
-  animation: twinkle 3s infinite alternate ease-in-out;
+  animation: twinkle 5s infinite alternate ease-in-out;
   opacity: 0;
 }
 
@@ -190,7 +192,7 @@ body::-webkit-scrollbar {
     transform: scale(0.2);
   }
   to {
-    opacity: 0.6;
+    opacity: 0.7;
     transform: scale(0.3);
   }
 }
