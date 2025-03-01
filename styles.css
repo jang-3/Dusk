@@ -196,6 +196,7 @@ body::-webkit-scrollbar {
   box-shadow: 0 0 5px white;
   animation: twinkleStart 4s alternate ease-in-out;
   opacity: 0;
+  will-change: animation, opacity;
 }
 
 @keyframes twinkleStart {

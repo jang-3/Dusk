@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let isScrollingDown = true;
 
   // Create stars dynamically
-  createStars(300);
+  createStars(200);
 
   function createStars(count) {
     for (let i = 0; i < count; i++) {
