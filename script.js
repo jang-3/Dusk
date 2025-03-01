@@ -79,14 +79,12 @@ document.addEventListener("DOMContentLoaded", function () {
           star.style.transform = `translateY(${-scrollY * movementFactor}px)`;
         });
 
-        // Restart animation when scrolling back to section
         if (
-          scrollY + windowHeight * 1.5 > sectionTop &&
-          scrollY < sectionBottom
+          scrollY + windowHeight * 0.5 > sectionTop &&
+          scrollY < sectionBottom - windowHeight * 0.3
         ) {
           restartStarAnimation();
         }
-
         ticking = false;
       });
       ticking = true;
@@ -94,6 +92,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function restartStarAnimation() {
+    document.querySelectorAll(".star").forEach((star) => {
+      star.style.opacity = "0"; // Fade out instead of instant reset
+    });
+
     setTimeout(() => {
       document.querySelectorAll(".star").forEach((star) => {
         star.style.animation = "none"; // Remove existing animation

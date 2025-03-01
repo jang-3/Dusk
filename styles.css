@@ -193,6 +193,7 @@ body::-webkit-scrollbar {
   position: absolute;
   background-color: white;
   border-radius: 50%;
+  transition: opacity 0.5 ease-out;
   box-shadow: 0 0 5px white;
   animation: twinkleStart 4s alternate ease-in-out;
   opacity: 0;
