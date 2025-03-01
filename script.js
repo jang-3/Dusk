@@ -29,7 +29,22 @@ document.addEventListener("DOMContentLoaded", function () {
       star.style.top = `${y}px`;
       star.style.width = `${size}px`;
       star.style.height = `${size}px`;
+      star.style.opacity = `0`;
       star.dataset.size = size; // Store size for parallax logic
+
+      // Set Random Delay & Duration for Animation (Fixed)
+      const delay = Math.random() * 3 + "s"; // Random delay between 0s - 3s
+      const duration = Math.random() * 4 + 3 + "s"; // Random duration between 3s - 7s
+
+      star.style.animationDelay = delay;
+      star.style.animationDuration = duration;
+
+      // Listen for when `twinkleStart` finishes, then start `twinkle`
+      star.addEventListener("animationend", (event) => {
+        if (event.animationName === "twinkleStart") {
+          star.style.animation = "twinkle 4s infinite alternate ease-in-out";
+        }
+      });
 
       starsContainer.appendChild(star);
     }
@@ -57,26 +72,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
         welcome.style.transform = `translateY(${scrollY * 0.3}px)`;
 
+        // Parallax effect for stars (Fixed)
+        document.querySelectorAll(".star").forEach((star) => {
+          let size = parseFloat(star.dataset.size);
+          let movementFactor = 0.1 + size * 0.9;
+          star.style.transform = `translateY(${-scrollY * movementFactor}px)`;
+        });
+
+        // Restart animation when scrolling back to section
+        if (
+          scrollY + windowHeight * 1.5 > sectionTop &&
+          scrollY < sectionBottom
+        ) {
+          restartStarAnimation();
+        }
+
         ticking = false;
       });
       ticking = true;
-
-      // Parallax effect for stars
-      document.querySelectorAll(".star").forEach((star) => {
-        let size = parseFloat(star.dataset.size);
-        let movementFactor = 0.1 + size * 0.5;
-        star.style.transform = `translateY(${-scrollY * movementFactor}px)`;
-        const delay = Math.random() * 10 + "s"; // Random delay between 0s and 10s
-        const duration = Math.random() * 3 + 2 + "s"; // Random duration between 2s and 5s
-
-        star.style.setProperty("--animation-delay", delay);
-        star.style.setProperty("--animation-duration", duration);
-      });
-
-      if (scrollY + windowHeight > sectionTop && scrollY < sectionBottom) {
-        restartStarAnimation();
-      }
     }
+  }
+
+  function restartStarAnimation() {
+    setTimeout(() => {
+      document.querySelectorAll(".star").forEach((star) => {
+        star.style.animation = "none"; // Remove existing animation
+        void star.offsetWidth; // Trigger reflow to reset animation
+        star.style.animation = "twinkleStart 4s alternate ease-in-out"; // Restart first animation
+      });
+    }, 1000);
   }
 
   function animateEntrance() {
@@ -87,12 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
     bottom.style.transform = "translateY(0)";
     skyblue.style.transform = "translateY(0)";
     skyorange.style.transform = "translateY(0)";
-
-    setTimeout(() => {
-      document.querySelectorAll(".star").forEach((star) => {
-        star.style.opacity = "0.1";
-      });
-    }, 1000);
   }
 
   function updateElementPositions() {

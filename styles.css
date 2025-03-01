@@ -47,6 +47,7 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
   perspective: 1500px; /* ✅ Enables depth effect */
   transform-style: preserve-3d;
 }
@@ -72,6 +73,7 @@ body::-webkit-scrollbar {
   will-change: transform;
   font-family: "bastia", sans-serif;
   letter-spacing: -1px;
+  z-index: 2;
 }
 
 #sky-blue {
@@ -84,7 +86,7 @@ body::-webkit-scrollbar {
   background-repeat: no-repeat;
   z-index: 2; /* Sky overlays stars */
   transform: translateZ(-700px) scale(1.6);
-  top: -5vh; /* Start slightly off-screen */
+  top: 0vh; /* Start slightly off-screen */
   will-change: transform;
 }
 
@@ -107,7 +109,7 @@ body::-webkit-scrollbar {
   width: 100%;
   height: 30vh;
   bottom: -9.25vh; /* Start slightly off-screen */
-  background-image: url("images/DuskfallBottom.png");
+  background-image: url("images/BottomReplace.png");
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 20; /* Bottom overlays everything */
@@ -192,13 +194,24 @@ body::-webkit-scrollbar {
   background-color: white;
   border-radius: 50%;
   box-shadow: 0 0 5px white;
-  animation: twinkle 5s infinite alternate ease-in-out;
+  animation: twinkleStart 4s alternate ease-in-out;
   opacity: 0;
+}
+
+@keyframes twinkleStart {
+  from {
+    opacity: 0.1;
+    transform: scale(0.1);
+  }
+  to {
+    opacity: 0.4;
+    transform: scale(0.2);
+  }
 }
 
 @keyframes twinkle {
   from {
-    opacity: 0.5;
+    opacity: 0.4;
     transform: scale(0.2);
   }
   to {
