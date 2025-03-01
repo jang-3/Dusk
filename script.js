@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let sectionBottom = sectionTop + parallaxSection.offsetHeight;
 
         // Move bottom upwards the most
-        bottom.style.transform = `translateY(${-scrollY * 0.05}px)`;
+        bottom.style.transform = `translateY(${-scrollY * 0.01}px)`;
 
         // Move sky upwards slightly less
         skyblue.style.transform = `translateY(${scrollY * 0.2}px)`;
@@ -54,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Clouds parallax effect
         cloudFront.style.transform = `translateY(${scrollY * 0.1}px)`;
         cloudBack.style.transform = `translateY(${scrollY * 0.15}px)`;
+
+        welcome.style.transform = `translateY(${scrollY * 0.3}px)`;
 
         ticking = false;
       });

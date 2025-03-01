@@ -61,9 +61,8 @@ body::-webkit-scrollbar {
   align-items: center;
   height: 93vh;
   width: 100vw;
-  z-index: 50;
-  opacity: 0;
   color: white;
+  opacity: 0;
 }
 
 #sky-blue {
@@ -98,9 +97,9 @@ body::-webkit-scrollbar {
   position: absolute;
   width: 100%;
   height: 30vh;
-  bottom: -6vh; /* Start slightly off-screen */
+  bottom: -9.25vh; /* Start slightly off-screen */
   background-image: url("images/DuskfallBottom.png");
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   z-index: 20; /* Bottom overlays everything */
   will-change: transform;
@@ -155,7 +154,7 @@ body::-webkit-scrollbar {
 #cloud1 {
   background-image: url("images/Cloud1.png");
   width: 70vw;
-  height: 20vh;
+  height: 28vh;
 }
 
 #cloud3 {
