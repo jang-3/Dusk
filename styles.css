@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Bastia";
+  src: url("fonts/Bastia-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
 body,
 html {
   margin: 0;
@@ -62,7 +69,9 @@ body::-webkit-scrollbar {
   height: 93vh;
   width: 100vw;
   color: white;
-  opacity: 0;
+  will-change: transform;
+  font-family: "bastia", sans-serif;
+  letter-spacing: -1px;
 }
 
 #sky-blue {
@@ -129,6 +138,7 @@ body::-webkit-scrollbar {
   width: 100vw;
   display: flex;
   justify-content: space-between;
+  will-change: transform;
 }
 
 #cloud-back {
@@ -138,6 +148,7 @@ body::-webkit-scrollbar {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  will-change: transform;
 }
 
 #cloud1,
