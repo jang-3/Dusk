@@ -1,19 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const root = document.documentElement;
   const bottom = document.getElementById("duskfall-bottom");
   const skyblue = document.getElementById("sky-blue");
   const skyorange = document.getElementById("sky-orange");
-  const welcome = document.getElementById("welcome-text");
   const starsContainer = document.getElementById("stars-container");
-
-  const cloudFront = document.getElementById("cloud-front");
-  const cloudBack = document.getElementById("cloud-back");
 
   let ticking = false;
   let tickingTransitions = false;
   let lastScrollPosition = window.scrollY;
   let isScrollingDown = true;
 
-  // Create stars dynamically
+  // 🎇 Create stars dynamically
   createStars(200);
 
   function createStars(count) {
@@ -22,31 +19,26 @@ document.addEventListener("DOMContentLoaded", function () {
       star.classList.add("star");
 
       let x = Math.random() * window.innerWidth;
-      let y = (Math.random() * window.innerHeight) / 1.4;
-      let size = Math.random() * 3 + 0.2; // Star size varies from 0.2px to 3.2px
+      let y = (Math.random() * window.innerHeight) / 1.9;
+      let size = Math.random() * 3 + 0.2;
 
       star.style.left = `${x}px`;
       star.style.top = `${y}px`;
       star.style.width = `${size}px`;
       star.style.height = `${size}px`;
-      star.style.opacity = `0`;
-      star.dataset.size = size; // Store size for parallax logic
+      star.style.opacity = "0";
 
-      // Set Random Delay & Duration for Animation (Fixed)
-      const delay = Math.random() * 3 + "s"; // Random delay between 0s - 3s
-      const duration = Math.random() * 4 + 3 + "s"; // Random duration between 3s - 7s
+      star.style.animationDelay = `${Math.random() * 3}s`;
+      star.style.animationDuration = `${Math.random() * 4 + 3}s`;
 
-      star.style.animationDelay = delay;
-      star.style.animationDuration = duration;
-
-      // Listen for when `twinkleStart` finishes, then start `twinkle`
+      starsContainer.appendChild(star);
       star.addEventListener("animationend", (event) => {
         if (event.animationName === "twinkleStart") {
+          star.style.animation = "none";
+          void star.offsetWidth;
           star.style.animation = "twinkle 4s infinite alternate ease-in-out";
         }
       });
-
-      starsContainer.appendChild(star);
     }
   }
 
@@ -54,82 +46,40 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!ticking) {
       requestAnimationFrame(() => {
         let scrollY = window.scrollY;
-        let windowHeight = window.innerHeight;
-        let parallaxSection = starsContainer.parentElement;
-        let sectionTop = parallaxSection.offsetTop;
-        let sectionBottom = sectionTop + parallaxSection.offsetHeight;
+        root.style.setProperty("--scrollY", scrollY); // ✅ Update global CSS variable
 
-        // Move bottom upwards the most
-        bottom.style.transform = `translateY(${-scrollY * 0.01}px)`;
-
-        // Move sky upwards slightly less
-        skyblue.style.transform = `translateY(${scrollY * 0.2}px)`;
-        skyorange.style.transform = `translateY(${scrollY * 0.07}px)`;
-
-        // Clouds parallax effect
-        cloudFront.style.transform = `translateY(${scrollY * 0.1}px)`;
-        cloudBack.style.transform = `translateY(${scrollY * 0.15}px)`;
-
-        welcome.style.transform = `translateY(${scrollY * 0.3}px)`;
-
-        // Parallax effect for stars
-        document.querySelectorAll(".star").forEach((star) => {
-          let size = parseFloat(star.dataset.size);
-          let movementFactor = 0.1 + size * 0.9;
-          star.style.transform = `translateY(${-scrollY * movementFactor}px)`;
-        });
-
-        // ⭐ Smooth Brightness Change ⭐
-        let shouldBeDark =
-          scrollY + windowHeight * 0.9 > sectionTop &&
-          scrollY < sectionBottom - windowHeight * 0.7;
-
-        // Only change brightness if needed (prevents reapplying the same value)
-        let currentBrightness = window.getComputedStyle(bottom).filter;
-        let targetBrightness = shouldBeDark ? "brightness(1)" : "brightness(0)";
-
-        if (currentBrightness !== targetBrightness) {
-          bottom.style.transition = "filter 0.5s ease-in-out"; // Ensure transition applies
-          bottom.style.filter = targetBrightness;
-        }
+        updateBrightness(); // Ensure brightness changes with scroll
+        updateElementTransitions(); // ✅ Ensure section fade-in works
 
         ticking = false;
       });
-
       ticking = true;
     }
   }
 
-  function restartStarAnimation() {
-    document.querySelectorAll(".star").forEach((star) => {
-      star.style.opacity = "0"; // Fade out instead of instant reset
-    });
+  function updateBrightness() {
+    let scrollY = window.scrollY;
+    let windowHeight = window.innerHeight;
+    let sectionTop = starsContainer.parentElement.offsetTop;
+    let sectionBottom = sectionTop + starsContainer.parentElement.offsetHeight;
 
-    setTimeout(() => {
-      document.querySelectorAll(".star").forEach((star) => {
-        star.style.animation = "none"; // Remove existing animation
-        void star.offsetWidth; // Trigger reflow to reset animation
-        star.style.animation = "twinkleStart 4s alternate ease-in-out"; // Restart first animation
-      });
-    }, 1000);
+    let shouldBeDark =
+      scrollY + windowHeight * 0.9 > sectionTop &&
+      scrollY < sectionBottom - windowHeight * 0.7;
+
+    let targetBrightness = shouldBeDark ? "brightness(1)" : "brightness(0)";
+
+    if (bottom.style.filter !== targetBrightness) {
+      bottom.style.transition = "filter 0.5s ease-in-out";
+      bottom.style.filter = targetBrightness;
+    }
   }
 
-  function animateEntrance() {
-    bottom.style.transition = "transform 1.5s ease-out";
-    skyblue.style.transition = "transform 1.5s ease-out";
-    skyorange.style.transition = "transform 2s ease-out";
-
-    bottom.style.transform = "translateY(0)";
-    skyblue.style.transform = "translateY(0)";
-    skyorange.style.transform = "translateY(0)";
-  }
-
-  function updateElementPositions() {
+  function updateElementTransitions() {
     if (!tickingTransitions) {
       requestAnimationFrame(() => {
         const scrollPosition = window.scrollY + window.innerHeight * 0.7;
 
-        // Detect scroll direction
         isScrollingDown = window.scrollY > lastScrollPosition;
         lastScrollPosition = window.scrollY;
 
@@ -181,6 +131,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function restartStarAnimation() {
+    document.querySelectorAll(".star").forEach((star) => {
+      star.style.opacity = "0";
+    });
+
+    setTimeout(() => {
+      document.querySelectorAll(".star").forEach((star) => {
+        star.style.animation = "none";
+        void star.offsetWidth;
+        star.style.animation = "twinkleStart 4s alternate ease-in-out";
+      });
+    }, 1000);
+  }
+
+  function animateEntrance() {
+    bottom.style.transition = "transform 1.5s ease-out";
+    skyblue.style.transition = "transform 1.5s ease-out";
+    skyorange.style.transition = "transform 2s ease-out";
+
+    /*
+    bottom.style.transform = "translateY(0)";
+    skyblue.style.transform = "translateY(0)";
+    skyorange.style.transform = "translateY(0)";*/
+  }
+
   function getTransformValue(direction, offset) {
     switch (direction) {
       case "left":
@@ -197,8 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   window.addEventListener("scroll", applyParallax);
-  window.addEventListener("scroll", updateElementPositions);
 
   animateEntrance();
-  updateElementPositions();
+  updateElementTransitions();
 });
