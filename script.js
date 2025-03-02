@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let scrollY = window.scrollY;
         root.style.setProperty("--scrollY", scrollY); // ✅ Update global CSS variable
 
-        updateBrightness(); // Ensure brightness changes with scroll
+        // updateBrightness(); // Ensure brightness changes with scroll
         updateElementTransitions(); // ✅ Ensure section fade-in works
 
         ticking = false;
