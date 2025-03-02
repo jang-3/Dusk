@@ -113,7 +113,9 @@ body::-webkit-scrollbar {
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 20; /* Bottom overlays everything */
-  will-change: transform;
+  filter: brightness(1);
+  will-change: transform, filter;
+  transition: filter 1s ease-in-out;
 }
 
 /* Ensure cloud images are correctly positioned */

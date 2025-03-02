@@ -72,21 +72,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         welcome.style.transform = `translateY(${scrollY * 0.3}px)`;
 
-        // Parallax effect for stars (Fixed)
+        // Parallax effect for stars
         document.querySelectorAll(".star").forEach((star) => {
           let size = parseFloat(star.dataset.size);
           let movementFactor = 0.1 + size * 0.9;
           star.style.transform = `translateY(${-scrollY * movementFactor}px)`;
         });
 
-        if (
-          scrollY + windowHeight * 0.5 > sectionTop &&
-          scrollY < sectionBottom - windowHeight * 0.3
-        ) {
-          restartStarAnimation();
+        // ⭐ Smooth Brightness Change ⭐
+        let shouldBeDark =
+          scrollY + windowHeight * 0.9 > sectionTop &&
+          scrollY < sectionBottom - windowHeight * 0.7;
+
+        // Only change brightness if needed (prevents reapplying the same value)
+        let currentBrightness = window.getComputedStyle(bottom).filter;
+        let targetBrightness = shouldBeDark ? "brightness(1)" : "brightness(0)";
+
+        if (currentBrightness !== targetBrightness) {
+          bottom.style.transition = "filter 0.5s ease-in-out"; // Ensure transition applies
+          bottom.style.filter = targetBrightness;
         }
+
         ticking = false;
       });
+
       ticking = true;
     }
   }
