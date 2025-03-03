@@ -107,17 +107,20 @@ body::-webkit-scrollbar {
   background-size: cover;
   background-position: bottom center;
   background-repeat: no-repeat;
-  will-change: transform;
+  will-change: transform, opacity;
 }
 
 #sky-blue {
-  background-image: url("images/BlueLayer.png");
+  background-image: url("images/BluerSky.png");
   transform: translateY(calc(-2vh - var(--scrollY) * -0.03vh));
+  opacity: calc(max(0, 1 - (var(--scrollY) / 1000)));
+  height: 40vh;
 }
 
 #sky-orange {
   background-image: url("images/skyOrange.png");
   transform: translateY(calc(-2vh - var(--scrollY) * -0.01vh));
+  opacity: calc(max(0, 1 - (var(--scrollY) / 1000)));
 }
 
 /* 📜 Welcome Text */
@@ -139,10 +142,10 @@ body::-webkit-scrollbar {
 /* 🌄 Bottom Layer */
 #duskfall-bottom {
   position: absolute;
-  width: 100%;
+  width: 100vw;
   height: 30vh;
   background-image: url("images/BottomReplace.png");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   bottom: -17vh;
   z-index: 20;
