@@ -1,4 +1,7 @@
 function init() {
+  window.scrollTo(0, 0); // Reset scroll position
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0; // For Safari compatibility
   new SmoothScroll(document, 20, 25);
 }
 
