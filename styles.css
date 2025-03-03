@@ -15,7 +15,7 @@ html {
   margin: 0;
   padding: 0;
   height: 1000%;
-  width: 100%;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -35,26 +35,32 @@ body::-webkit-scrollbar {
 #parallax-container {
   position: absolute;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 95vh;
   overflow-x: hidden;
   overflow-y: visible;
   background-color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  perspective: 1500px;
+  justify-content: flex-end;
+  perspective: 150vh;
   transform-style: preserve-3d;
+  flex: 0 0 auto;
+}
+
+#parallax-container > *,
+#welcome {
+  flex: 0 0 auto;
 }
 
 /* 🌠 Stars */
 #stars-container {
   position: absolute;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   z-index: 1;
-  transform: translateZ(-1000px) scale(2)
-    translateY(calc(var(--scrollY) * -0.1));
+  transform: translateY(calc(var(--scrollY) * -0.01vh));
   pointer-events: none;
   will-change: transform, opacity;
 }
@@ -106,12 +112,12 @@ body::-webkit-scrollbar {
 
 #sky-blue {
   background-image: url("images/BlueLayer.png");
-  transform: translateY(calc(-20px - var(--scrollY) * -0.3px));
+  transform: translateY(calc(-2vh - var(--scrollY) * -0.03vh));
 }
 
 #sky-orange {
   background-image: url("images/skyOrange.png");
-  transform: translateY(calc(-12px - var(--scrollY) * -0.1px));
+  transform: translateY(calc(-2vh - var(--scrollY) * -0.01vh));
 }
 
 /* 📜 Welcome Text */
@@ -138,10 +144,10 @@ body::-webkit-scrollbar {
   background-image: url("images/BottomReplace.png");
   background-size: contain;
   background-repeat: no-repeat;
+  bottom: -17vh;
   z-index: 20;
-  bottom: -150px;
   filter: brightness(calc(max(0, 1 - (var(--scrollY) * 2 / 1000))));
-  transform: translateY(calc(var((--scrollY)) * 0.1));
+  transform: translateY(calc(var((--scrollY)) * -0.01vh));
   will-change: transform, filter;
   transition: filter 3s ease-in-out;
 }
@@ -149,8 +155,8 @@ body::-webkit-scrollbar {
 /* ☁️ Clouds */
 #cloudcontainer {
   position: absolute;
-  width: 120vw;
-  height: 95vh;
+  width: 100vw;
+  height: 60vh;
   display: grid;
   place-items: center;
   z-index: 10;
@@ -163,7 +169,7 @@ body::-webkit-scrollbar {
 
 /* 🌥️ Front Clouds */
 #cloud-front {
-  bottom: 15vh;
+  bottom: 12vh;
   width: 100vw;
   display: flex;
   justify-content: space-between;
@@ -173,7 +179,7 @@ body::-webkit-scrollbar {
 
 /* 🌫️ Back Clouds */
 #cloud-back {
-  bottom: 12vh;
+  bottom: 7vh;
   width: 120vw;
   height: 60vh;
   display: flex;
@@ -210,7 +216,7 @@ body::-webkit-scrollbar {
 #cloud2 {
   background-image: url("images/Cloud2.png");
   width: 67vh;
-  margin-bottom: 15px;
+  margin-bottom: 1.5vh;
 }
 
 #cloud4 {

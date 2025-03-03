@@ -75,6 +75,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function updateProportions() {
+    const screenHeight = window.innerHeight;
+    const screenWidth = window.innerWidth;
+
+    document.documentElement.style.setProperty(
+      "--vh",
+      screenHeight / 100 + "px"
+    );
+    document.documentElement.style.setProperty(
+      "--vw",
+      screenWidth / 100 + "px"
+    );
+  }
+
   function updateElementTransitions() {
     if (!tickingTransitions) {
       requestAnimationFrame(() => {
@@ -170,9 +184,10 @@ document.addEventListener("DOMContentLoaded", function () {
         return "translateX(0) translateY(0)";
     }
   }
-
+  window.addEventListener("resize", updateProportions);
   window.addEventListener("scroll", applyParallax);
 
   animateEntrance();
   updateElementTransitions();
+  updateProportions();
 });
