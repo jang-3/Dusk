@@ -47,6 +47,7 @@ body::-webkit-scrollbar {
   perspective: 150vh;
   transform-style: preserve-3d;
   flex: 0 0 auto;
+  animation: animateIn 2s alternate ease-in-out;
 }
 
 #parallax-container > *,
@@ -60,7 +61,7 @@ body::-webkit-scrollbar {
   width: 100vw;
   height: 100vh;
   z-index: 1;
-  transform: translateY(calc(var(--scrollY) * -0.01vh));
+  transform: translateY(calc(var(--scrollY) * 0.05vh));
   pointer-events: none;
   will-change: transform, opacity;
 }
@@ -74,6 +75,39 @@ body::-webkit-scrollbar {
   animation: twinkleStart 4s alternate ease-in-out;
   opacity: 0.1;
   will-change: animation, opacity;
+}
+
+@keyframes animateIn {
+  from {
+    opacity: 0;
+    height: 110vh;
+  }
+  to {
+    opacity: 1;
+    height: 100vh;
+  }
+}
+
+@keyframes duskfallAnimateDown {
+  from {
+    opacity: 0;
+    transform: translateY(-1vh);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(calc(var(--scrollY) * 0.05vh));
+  }
+}
+
+@keyframes duskfallAnimateUp {
+  from {
+    opacity: 0;
+    transform: translateY(1vh);
+  }
+  to {
+    opacity: 0.6;
+    transform: translateY(calc(var(--scrollY) * 0.05vh - 10px));
+  }
 }
 
 @keyframes twinkleStart {
@@ -114,28 +148,63 @@ body::-webkit-scrollbar {
   transform: translateY(calc(-2vh - var(--scrollY) * -0.03vh));
   opacity: calc(max(0, 1 - (var(--scrollY) / 1000)));
   height: 40vh;
+  z-index: 2;
 }
 
 #sky-orange {
   background-image: url("images/skyOrange.png");
   transform: translateY(calc(-2vh - var(--scrollY) * -0.01vh));
   opacity: calc(max(0, 1 - (var(--scrollY) / 1000)));
+  z-index: 3;
 }
 
 /* 📜 Welcome Text */
 #welcome-text {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 93vh;
-  width: 100vw;
   color: white;
   font-family: "Bastia", sans-serif;
   letter-spacing: -1px;
-  z-index: 2;
-  transform: translateY(calc(var(--scrollY) * 0.1px));
+  font-size: 57px;
+  z-index: 3;
   will-change: transform;
+  margin-left: 5px;
+}
+
+#duskfall-intro {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+}
+
+#logo-intro {
+  height: 46px;
+  width: 46px;
+}
+
+#duskfall-intro div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: duskfallAnimateDown 0.5s alternate ease-in-out;
+  animation-delay: 2s;
+  opacity: 0;
+  margin-bottom: 5px;
+  height: 5vh;
+  transform: translateY(calc(var(--scrollY) * 0.05vh));
+  animation-fill-mode: forwards;
+}
+
+#duskfall-intro p {
+  animation: duskfallAnimateUp 0.5s alternate ease-in-out;
+  animation-delay: 2s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  transform: translateY(calc(var(--scrollY) * 0.05vh));
+  letter-spacing: 5px;
+  font-size: 15px;
 }
 
 /* 🌄 Bottom Layer */
@@ -147,8 +216,8 @@ body::-webkit-scrollbar {
   background-size: cover;
   background-repeat: no-repeat;
   bottom: -17vh;
-  z-index: 20;
-  filter: brightness(calc(max(0, 1 - (var(--scrollY) * 2 / 1000))));
+  z-index: 7;
+  filter: brightness(calc(max(0, 1 - (var(--scrollY) * 3 / 1000))));
   transform: translateY(calc(var((--scrollY)) * -0.01vh));
   will-change: transform, filter;
   transition: filter 3s ease-in-out;
@@ -161,7 +230,7 @@ body::-webkit-scrollbar {
   height: 60vh;
   display: grid;
   place-items: center;
-  z-index: 10;
+  z-index: 6;
 }
 
 #cloudcontainer > * {
