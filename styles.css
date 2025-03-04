@@ -181,7 +181,7 @@ body::-webkit-scrollbar {
 }
 
 #sky-blue {
-  background-image: url("images/BluerSky.png");
+  background-image: url("images/SkyBluest.png");
   transform: translateY(calc(-2vh - var(--scrollY) * -0.03vh));
   opacity: calc(max(0, 1 - (var(--scrollY) / 1000)));
   height: 40vh;
