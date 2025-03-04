@@ -41,6 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
+  /*
+  document.addEventListener("scroll", () => {
+    let scrollY = window.scrollY / 10; // Adjust sensitivity
+    document.querySelector(
+      "#parallax-container"
+    ).style.transform = `perspective(600px) rotateX(${scrollY * -0.2}deg)`;
+  });*/
 
   function applyParallax() {
     if (!ticking) {
