@@ -91,25 +91,37 @@ body::-webkit-scrollbar {
   }
 }
 
-@keyframes duskfallAnimateDown {
+@keyframes animateInSky {
   from {
     opacity: 0;
-    transform: translateY(-1vh);
+    transform: translateY(-10vh) perspective(600px) skewX(-15deg);
   }
   to {
     opacity: 1;
-    transform: translateY(calc(var(--scrollY) * 0.05vh));
+    transform: translateY(calc(-2vh + var(--scrollY) * 0.1vh))
+      perspective(600px) skewX(0deg);
+  }
+}
+
+@keyframes duskfallAnimateDown {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5vh) perspective(600px) rotateX(20deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0vh) perspective(600px) rotateX(0deg);
   }
 }
 
 @keyframes duskfallAnimateUp {
   from {
     opacity: 0;
-    transform: translateY(1vh);
+    transform: translateY(0.5vh) perspective(600px) rotateX(-20deg);
   }
   to {
     opacity: 0.6;
-    transform: translateY(calc(var(--scrollY) * 0.05vh - 10px));
+    transform: translateY(0vh) perspective(600px) rotateX(0deg);
   }
 }
 
@@ -188,13 +200,17 @@ body::-webkit-scrollbar {
   color: white;
   font-family: "Bastia", sans-serif;
   letter-spacing: -1px;
-  font-size: 57px;
+  font-size: 42px;
   z-index: 3;
   will-change: transform;
   margin-left: 5px;
 }
 
 #duskfall-intro {
+  animation: animateInSky 2s alternate ease-in-out;
+  animation-delay: 1s;
+  opacity: 0;
+  animation-fill-mode: forwards;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -202,32 +218,36 @@ body::-webkit-scrollbar {
   justify-content: center;
   align-items: center;
   z-index: 6;
+  background-image: url("images/Nebula.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  transform: translateY(calc(-2vh + var(--scrollY) * 0.1vh));
 }
 
 #logo-intro {
-  height: 46px;
-  width: 46px;
+  height: 31px;
+  width: 31px;
 }
 
 #duskfall-intro div {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: duskfallAnimateDown 0.5s alternate ease-in-out;
-  animation-delay: 2s;
+  animation: duskfallAnimateDown 0.8s alternate ease-in-out;
+  animation-delay: 2.7s;
   opacity: 0;
-  margin-bottom: 5px;
-  height: 5vh;
-  transform: translateY(calc(var(--scrollY) * 0.05vh));
+  height: 40px;
+  margin-bottom: 0px;
   animation-fill-mode: forwards;
 }
 
 #duskfall-intro p {
-  animation: duskfallAnimateUp 0.5s alternate ease-in-out;
-  animation-delay: 2s;
+  animation: duskfallAnimateUp 0.8s alternate ease-in-out;
+  animation-delay: 2.7s;
   opacity: 0;
   animation-fill-mode: forwards;
-  transform: translateY(calc(var(--scrollY) * 0.05vh));
   letter-spacing: 5px;
   font-size: 15px;
 }
