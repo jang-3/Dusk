@@ -62,7 +62,7 @@ body::-webkit-scrollbar {
   width: 100vw;
   height: 100vh;
   z-index: 1;
-  transform: translateY(calc(var(--scrollY) * 0.05vh));
+  transform: translateY(calc(var(--scrollY) * 0.1vh));
   pointer-events: none;
   will-change: transform, opacity;
 }
@@ -212,18 +212,17 @@ body::-webkit-scrollbar {
   opacity: 0;
   animation-fill-mode: forwards;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh + var(--scrollY) * 0.01vh);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 6;
-  background-image: url("images/Nebula.png");
+  background-image: url("images/Nebula10.png");
   background-size: cover;
-  background-position: center center;
+  background-position: top center;
   background-repeat: no-repeat;
-
-  transform: translateY(calc(-2vh + var(--scrollY) * 0.1vh));
+  transform: translateY(calc(-2vh + var(--scrollY) * 0.5vh));
 }
 
 #logo-intro {
@@ -249,6 +248,8 @@ body::-webkit-scrollbar {
   opacity: 0;
   animation-fill-mode: forwards;
   letter-spacing: 5px;
+  margin: 0px;
+  margin-top: 4px;
   font-size: 15px;
 }
 
