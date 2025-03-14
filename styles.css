@@ -44,7 +44,6 @@ body::-webkit-scrollbar {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  perspective: 150vh;
   transform-style: preserve-3d;
   flex: 0 0 auto;
   animation: animateIn 2s alternate ease-in-out;
@@ -170,11 +169,12 @@ body::-webkit-scrollbar {
 }
 
 #sky-blue,
-#sky-orange {
+#sky-orange,
+#aurora {
   position: absolute;
   width: 100%;
   height: 100vh;
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: bottom center;
   background-repeat: no-repeat;
   will-change: transform, opacity;
@@ -192,7 +192,44 @@ body::-webkit-scrollbar {
   background-image: url("images/skyOrange.png");
   transform: translateY(calc(-2vh - var(--scrollY) * -0.01vh));
   opacity: calc(max(0, 1 - (var(--scrollY) / 1000)));
+  height: 40vh;
   z-index: 3;
+}
+
+#aurora {
+  animation-delay: 3s;
+  background-size: contain;
+  background-image: url("images/AuroraPNG.png");
+  transform: translateY(calc(20vh + var(--scrollY) * 0.1vh)) translateX(10%);
+  opacity: calc(max(0, 0.5 - (var(--scrollY) / 3000)));
+  height: 120vh;
+  width: 100vw;
+  background-size: 88% 100%;
+  z-index: 2;
+  animation: auroraStart 10s alternate ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes auroraStart {
+  from {
+    opacity: 0;
+    width: 90vw;
+  }
+  to {
+    opacity: calc(max(0, 0.5 - (var(--scrollY) / 3000)));
+    width: 100vw;
+  }
+}
+
+@keyframes auroraAnimate {
+  from {
+    opacity: calc(max(0, 0.5 - (var(--scrollY) / 3000)));
+    width: 100vw;
+  }
+  to {
+    opacity: calc(max(0, 0.7 - (var(--scrollY) / 3000)));
+    width: 110vw;
+  }
 }
 
 /* 📜 Welcome Text */
@@ -216,13 +253,14 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 6;
-  background-image: url("images/Nebula10.png");
+  background-image: url("images/nebulax4.png");
   background-size: cover;
-  background-position: top center;
+  background-position: 0vw -15vh;
   background-repeat: no-repeat;
   transform: translateY(calc(-2vh + var(--scrollY) * 0.5vh));
+  padding-left: 45vw;
 }
 
 #logo-intro {
@@ -251,6 +289,7 @@ body::-webkit-scrollbar {
   margin: 0px;
   margin-top: 4px;
   font-size: 15px;
+  margin-left: 2.5vw;
 }
 
 /* 🌄 Bottom Layer */

@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const skyblue = document.getElementById("sky-blue");
   const skyorange = document.getElementById("sky-orange");
   const starsContainer = document.getElementById("stars-container");
+  const aurora = document.getElementById("aurora");
 
   let ticking = false;
   let tickingTransitions = false;
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
       star.classList.add("star");
 
       let x = Math.random() * window.innerWidth;
-      let y = (Math.random() * window.innerHeight) / 1.9;
+      let y = (Math.random() * window.innerHeight) / 2.5;
       let size = Math.random() * 3 + 0.2;
 
       star.style.left = `${x}px`;
@@ -191,6 +192,20 @@ document.addEventListener("DOMContentLoaded", function () {
         return "translateX(0) translateY(0)";
     }
   }
+
+  if (aurora) {
+    aurora.addEventListener("animationend", (event) => {
+      console.log("Aurora Animation Ended:", event.animationName);
+
+      if (event.animationName === "auroraStart") {
+        aurora.style.animation = "none";
+        void aurora.offsetWidth; // ✅ Force reflow
+        aurora.style.animation =
+          "auroraAnimate 20s infinite alternate ease-out";
+      }
+    });
+  }
+
   window.addEventListener("resize", updateProportions);
   window.addEventListener("scroll", applyParallax);
 
