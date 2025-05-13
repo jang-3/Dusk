@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const skyorange = document.getElementById("sky-orange");
   const starsContainer = document.getElementById("stars-container");
   const aurora = document.getElementById("aurora");
+  const element = document.getElementById("parallax-container");
+  let isAnimated = false;
 
   let ticking = false;
   let tickingTransitions = false;
@@ -208,6 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("resize", updateProportions);
   window.addEventListener("scroll", applyParallax);
+  window.addEventListener("scroll", handleScroll);
 
   animateEntrance();
   updateElementTransitions();

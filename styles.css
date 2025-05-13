@@ -20,7 +20,7 @@ html {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  background-color: black;
+  background-color: rgb(44, 44, 44);
   color: white;
   font-family: Arial, sans-serif;
   scrollbar-width: none;
@@ -34,8 +34,9 @@ body::-webkit-scrollbar {
 /* 📌 Parallax Container */
 #parallax-container {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: calc(100vw - (var(--scrollY) * 0.01vw));
+  min-width: 90vw;
+  height: calc(100vh - (var(--scrollY) * 0.01vh));
   min-height: 95vh;
   overflow-y: hidden;
   overflow-x: hidden;
@@ -48,11 +49,19 @@ body::-webkit-scrollbar {
   flex: 0 0 auto;
   animation: animateIn 2s alternate ease-in-out;
   transform: perspective(600px) rotateX(calc(var(--scrollY * 10)));
+  animation-fill-mode: forwards;
 }
 
 #parallax-container > *,
 #welcome {
-  flex: 0 0 auto;
+}
+
+#welcome {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 🌠 Stars */
@@ -160,11 +169,11 @@ body::-webkit-scrollbar {
 @keyframes cloudAnimateLeft {
   from {
     opacity: 0.4;
-    transform: translateX(-20vw);
+    transform: translateX(-15vw);
   }
   to {
     opacity: 1;
-    transform: translateX(-15vw);
+    transform: translateX(-10vw);
   }
 }
 
@@ -232,6 +241,30 @@ body::-webkit-scrollbar {
   }
 }
 
+.animatePage {
+  animation: animatePages 1.5s alternate ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.resetPage {
+  animation: resetPages 1.5s alternate ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animatePages {
+  to {
+    width: 90vw;
+    height: 90vh;
+  }
+}
+
+@keyframes resetPages {
+  to {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
 /* 📜 Welcome Text */
 #welcome-text {
   color: white;
@@ -253,14 +286,13 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   z-index: 6;
   background-image: url("images/nebulax4.png");
   background-size: cover;
   background-position: 0vw -15vh;
   background-repeat: no-repeat;
   transform: translateY(calc(-2vh + var(--scrollY) * 0.5vh));
-  padding-left: 45vw;
 }
 
 #logo-intro {
@@ -289,7 +321,7 @@ body::-webkit-scrollbar {
   margin: 0px;
   margin-top: 4px;
   font-size: 15px;
-  margin-left: 2.5vw;
+  margin-left: 1.5vw;
 }
 
 /* 🌄 Bottom Layer */
@@ -300,7 +332,7 @@ body::-webkit-scrollbar {
   background-image: url("images/DuskFloor.png");
   background-size: cover;
   background-repeat: no-repeat;
-  bottom: -17vh;
+  bottom: -14vh;
   z-index: 7;
   filter: brightness(calc(max(0, 1 - (var(--scrollY) * 3 / 1000))));
   transform: translateY(calc(100vh - var((--scrollY)) * -0.8vh));
@@ -311,8 +343,8 @@ body::-webkit-scrollbar {
 /* ☁️ Clouds */
 #cloudcontainer {
   position: absolute;
-  width: 100vw;
-  height: 60vh;
+  width: 90vw;
+  height: 100vh;
   display: -ms-inline-grid;
   place-items: center;
   z-index: 6;
@@ -325,7 +357,7 @@ body::-webkit-scrollbar {
 
 /* 🌥️ Front Clouds */
 #cloud-front {
-  bottom: 12vh;
+  bottom: 15vh;
   width: max-content;
   display: flex;
   justify-content: space-between;
@@ -335,7 +367,7 @@ body::-webkit-scrollbar {
 
 /* 🌫️ Back Clouds */
 #cloud-back {
-  bottom: 7vh;
+  bottom: 10vh;
   width: max-content;
   height: 60vh;
   display: flex;
@@ -385,6 +417,7 @@ body::-webkit-scrollbar {
   background-image: url("images/Cloud2.png");
   width: 67vh;
   margin-bottom: 1.5vh;
+  transform: translateX(60vw);
 }
 
 #cloud4 {
@@ -394,7 +427,6 @@ body::-webkit-scrollbar {
 }
 
 .container {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -449,4 +481,16 @@ body::-webkit-scrollbar {
 
 .transition-element:not(.visible)[data-direction="down"] {
   transform: translateY(10vh);
+}
+
+#abt-me {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vh;
+  height: 100vh;
+}
+
+#abt-me > * {
+  padding: 30px;
 }
