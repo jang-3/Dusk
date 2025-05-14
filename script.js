@@ -8,6 +8,42 @@ document.addEventListener("DOMContentLoaded", function () {
   const element = document.getElementById("parallax-container");
   let isAnimated = false;
 
+  const observer = new ResizeObserver((entries) => {
+    for (let entry of entries) {
+      const el = entry.target;
+      const width = entry.contentRect.width;
+      const height = entry.contentRect.height;
+
+      const minWidth = window.innerWidth * 0.98;
+      const minHeight = window.innerHeight * 0.9;
+
+      const isFixed = getComputedStyle(el).position === "fixed";
+
+      if (width <= minWidth && height <= minHeight && isFixed) {
+        // 1. Capture current visual position
+        const rect = el.getBoundingClientRect();
+        const scrollTop = window.scrollY;
+
+        const top = rect.top + scrollTop;
+        const left = rect.left + window.scrollX;
+
+        // 2. Freeze into absolute positioning
+        el.style.position = "absolute";
+        el.style.top = `${top}px`;
+        el.style.left = `${left}px`;
+      }
+
+      // Optional: reset to fixed if size increases again
+      if ((width > minWidth || height > minHeight) && !isFixed) {
+        el.style.position = "fixed";
+        el.style.top = "";
+        el.style.left = "";
+      }
+    }
+  });
+
+  observer.observe(document.getElementById("parallax-container"));
+
   let ticking = false;
   let tickingTransitions = false;
   let lastScrollPosition = window.scrollY;
