@@ -18,7 +18,7 @@ html {
   width: 100vw;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
   background-color: rgb(44, 44, 44);
   color: white;
@@ -31,13 +31,21 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+#fixer {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+}
+
 /* 📌 Parallax Container */
 #parallax-container {
-  position: absolute;
+  position: fixed;
   width: calc(100vw - (var(--scrollY) * 0.01vw));
-  min-width: 90vw;
-  height: calc(100vh - (var(--scrollY) * 0.01vh));
-  min-height: 95vh;
+  height: calc(100vh - (var(--scrollY) * 0.04vh));
+  min-width: 95vw;
+  min-height: 90vh;
   overflow-y: hidden;
   overflow-x: hidden;
   background-color: black;
@@ -46,10 +54,8 @@ body::-webkit-scrollbar {
   align-items: center;
   justify-content: flex-end;
   transform-style: preserve-3d;
-  flex: 0 0 auto;
   animation: animateIn 2s alternate ease-in-out;
-  transform: perspective(600px) rotateX(calc(var(--scrollY * 10)));
-  animation-fill-mode: forwards;
+  animation-fill-mode: backwards;
 }
 
 #parallax-container > *,
@@ -90,12 +96,10 @@ body::-webkit-scrollbar {
   from {
     opacity: 0;
     height: 110vh;
-    transform: perspective(600px) rotateX(60deg);
   }
   to {
     opacity: 1;
     height: 100vh;
-    transform: perspective(600px) rotateX(0deg);
   }
 }
 
