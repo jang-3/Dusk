@@ -7,42 +7,38 @@ document.addEventListener("DOMContentLoaded", function () {
   const aurora = document.getElementById("aurora");
   const element = document.getElementById("parallax-container");
   let isAnimated = false;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
 
-  const observer = new ResizeObserver((entries) => {
-    for (let entry of entries) {
-      const el = entry.target;
-      const width = entry.contentRect.width;
-      const height = entry.contentRect.height;
+  const container = document.getElementById("parallax-container");
 
-      const minWidth = window.innerWidth * 0.98;
-      const minHeight = window.innerHeight * 0.9;
+  function updateScrollStyles() {
+    const scrollY = window.scrollY;
+    document.documentElement.style.setProperty("--scrollY", scrollY);
 
-      const isFixed = getComputedStyle(el).position === "fixed";
+    // Compute current dynamic size
+    const width = vw - scrollY * 0.005;
+    const height = vh - scrollY * 0.025;
 
-      if (width <= minWidth && height <= minHeight && isFixed) {
-        // 1. Capture current visual position
-        const rect = el.getBoundingClientRect();
-        const scrollTop = window.scrollY;
+    scrollCurrent = window.scrollY;
+    scrollChange = scrollY - scrollCurrent;
+    const minWidth = vw * 0.98;
+    const minHeight = vh * 0.9;
 
-        const top = rect.top + scrollTop;
-        const left = rect.left + window.scrollX;
+    const reachedMinSize = (width <= minWidth) | (height <= minHeight);
 
-        // 2. Freeze into absolute positioning
-        el.style.position = "absolute";
-        el.style.top = `${top}px`;
-        el.style.left = `${left}px`;
-      }
-
-      // Optional: reset to fixed if size increases again
-      if ((width > minWidth || height > minHeight) && !isFixed) {
-        el.style.position = "fixed";
-        el.style.top = "";
-        el.style.left = "";
-      }
+    if (reachedMinSize) {
+      container.style.transform = `translateY(${scrollChange}px)`;
+    } else {
+      // Let CSS handle size again via variables
+      container.style.width = "";
+      container.style.height = "";
     }
-  });
+  }
 
-  observer.observe(document.getElementById("parallax-container"));
+  window.addEventListener("scroll", updateScrollStyles);
+  window.addEventListener("load", updateScrollStyles);
+  updateScrollStyles(); // initial call
 
   let ticking = false;
   let tickingTransitions = false;
@@ -102,6 +98,35 @@ document.addEventListener("DOMContentLoaded", function () {
       ticking = true;
     }
   }
+
+  const unstuckThreshold = 500;
+  const yes = document.getElementById("pc-up");
+
+  let hasUnstuck = false;
+  let lockedOffset = 0;
+
+  window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+
+    // Update scroll variable for shrinking #two
+    document.documentElement.style.setProperty("--scrollY", scrollY);
+
+    if (scrollY < unstuckThreshold) {
+      yes.style.position = "fixed";
+      yes.style.top = "0";
+      yes.style.transform = "translateY(0)";
+      hasUnstuck = false;
+    } else if (!hasUnstuck) {
+      // Lock it in place and let it scroll naturally
+      const rect = yes.getBoundingClientRect();
+      lockedOffset = scrollY + rect.top;
+
+      yes.style.position = "absolute";
+      yes.style.top = `${lockedOffset}px`;
+      yes.style.transform = "none";
+      hasUnstuck = true;
+    }
+  });
 
   function updateBrightness() {
     let scrollY = window.scrollY;
@@ -246,7 +271,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("resize", updateProportions);
   window.addEventListener("scroll", applyParallax);
-  window.addEventListener("scroll", handleScroll);
 
   animateEntrance();
   updateElementTransitions();

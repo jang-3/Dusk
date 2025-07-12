@@ -14,17 +14,15 @@ body,
 html {
   margin: 0;
   padding: 0;
-  height: 1000%;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: rgb(24, 24, 24);
+  background-color: rgb(16, 16, 16);
   color: white;
   font-family: Arial, sans-serif;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 body::-webkit-scrollbar {
@@ -39,24 +37,46 @@ body::-webkit-scrollbar {
   position: fixed;
 }
 
-/* 📌 Parallax Container */
-#parallax-container {
+#pc-up {
   position: fixed;
-  transition: top 0.4s ease;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: transform 0.2s ease-out;
+}
+
+#parallax-container {
+  will-change: top, left, transform;
+  transition: top 0.3s ease, left 0.3s ease, transform 0.3s ease;
+
   width: calc(100vw - (var(--scrollY) * 0.005vw));
   height: calc(100vh - (var(--scrollY) * 0.025vh));
   min-width: 98vw;
   min-height: 90vh;
-  overflow-y: hidden;
-  overflow-x: hidden;
+
+  overflow: hidden;
   background-color: black;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+
   transform-style: preserve-3d;
   animation: animateIn 2s alternate ease-in-out;
   animation-fill-mode: backwards;
+  transform-origin: center;
+  z-index: 10;
+}
+
+#parallax-spacer {
+  height: 120vh; /* Or more – depends on when you unstick */
 }
 
 #parallax-container > *,

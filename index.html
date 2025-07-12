@@ -5,33 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Portfolio</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="normalize.css" />
   </head>
   <body onload="init()">
     <section class="normal-scroll-section" id="welcome">
-      <section id="parallax-container">
-        <div id="stars-container"></div>
-        <div id="duskfall-intro">
-          <div>
-            <img src="images/DuskfallMoon.png" id="logo-intro" />
-            <h1 id="welcome-text">Duskfall</h1>
+      <div id="pc-up">
+        <section id="parallax-container">
+          <div id="stars-container"></div>
+          <div id="duskfall-intro">
+            <div>
+              <img src="images/DuskfallMoon.png" id="logo-intro" />
+              <h1 id="welcome-text">Duskfall</h1>
+            </div>
+            <p id="intro-desc">JOSEPH ANG</p>
           </div>
-          <p id="intro-desc">JOSEPH ANG</p>
-        </div>
-        <div id="sky-blue"></div>
-        <div id="sky-orange"></div>
-        <!-- Bottom image overlays everything -->
-        <div id="cloudcontainer">
-          <div id="cloud-back">
-            <div class="cloud" id="cloud1"></div>
-            <div class="cloud" id="cloud3"></div>
+          <div id="sky-blue"></div>
+          <div id="sky-orange"></div>
+          <!-- Bottom image overlays everything -->
+          <div id="cloudcontainer">
+            <div id="cloud-back">
+              <div class="cloud" id="cloud1"></div>
+              <div class="cloud" id="cloud3"></div>
+            </div>
+            <div id="cloud-front">
+              <div class="cloud" id="cloud2"></div>
+              <div class="cloud" id="cloud4"></div>
+            </div>
           </div>
-          <div id="cloud-front">
-            <div class="cloud" id="cloud2"></div>
-            <div class="cloud" id="cloud4"></div>
-          </div>
-        </div>
-        <div id="duskfall-bottom"></div>
-      </section>
+          <div id="duskfall-bottom"></div>
+        </section>
+      </div>
+      <div style="height: 5000px"></div>
     </section>
 
     <div class="container">
