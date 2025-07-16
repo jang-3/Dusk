@@ -43,7 +43,7 @@ body::-webkit-scrollbar {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: green;
+  background-color: rgb(16, 16, 16);
   display: flex;
   align-items: center;
   justify-content: center;
