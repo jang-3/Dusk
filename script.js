@@ -331,7 +331,11 @@ document.addEventListener("DOMContentLoaded", function () {
           title = line.replace("$title", "").trim();
         }
       }
-      select.innerHTML += `<div class="port-option"><div class="option-tn" style="background-image: url('${thumbnail}'); "></div><p>${title}</p></div>`;
+      select.innerHTML += `
+      <div class="port-option" onclick="showOnlyDiv('${filename}')">
+        <div class="option-tn" style="background-image: url('${thumbnail}');"></div>
+        <p>${title}</p>
+      </div>`;
       // 📌 Save to Map (optional, for later use)
       if (thumbnail) {
         thumbnailMap.set(filename, thumbnail);
@@ -352,7 +356,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const res = await fetch(filename);
     const text = await res.text();
 
-    const containerDiv = document.createElement("div");
+    const containerDiv = document.getElementById("div");
     containerDiv.classList.add("portfolio-page");
 
     // Example Markdown parsing logic (replace with your own)
@@ -401,6 +405,7 @@ document.addEventListener("DOMContentLoaded", function () {
       div.style.display = filename === filenameToShow ? "block" : "none";
     }
   }
+  window.showOnlyDiv = showOnlyDiv;
 
   populatePortfolioOptions(portfolio);
 });
