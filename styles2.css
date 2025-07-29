@@ -1,0 +1,77 @@
+.portfolio-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+  overflow-y: auto;
+  padding: 30px;
+  flex-direction: column;
+}
+
+.outlined {
+  border: 5px solid grey;
+}
+
+#portfolio-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  pointer-events: none;
+}
+
+#portfolio-container.active {
+  transform: translateY(0%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#portfolioDisplay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  transform: none !important; /* <-- this removes centering */
+  z-index: 999 !important;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  padding: 10px 15px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#portfolio-trigger {
+  height: 1px;
+  margin-top: 10px; /* or wherever you want trigger to happen */
+}

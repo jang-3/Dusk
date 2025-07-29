@@ -522,6 +522,7 @@ body::-webkit-scrollbar {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
   width: 100vw;
   height: 30vh;
 }

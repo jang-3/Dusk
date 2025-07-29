@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Portfolio</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles2.css" />
     <link rel="stylesheet" href="normalize.css" />
+    <script src="script.js" defer></script>
+    <script src="https://unpkg.com/intersection-observer/intersection-observer.js"></script>
   </head>
-  <body onload="init()">
+  <body onload="init()" defer>
     <section class="normal-scroll-section" id="welcome">
       <div id="pc-up">
         <section id="parallax-container">
@@ -39,8 +42,14 @@
     </section>
     <div style="height: 200vh"></div>
     <div id="portfolioSelect"></div>
-    <div id="div"></div>
+    <div id="portfolio-trigger"></div>
+
+    <button onclick="goToNext()">Up</button>
+    <button onclick="goToPrev()">down</button>
+    <div id="portfolio-container">
+      <div id="portfolioDisplay"></div>
+    </div>
     <script src="smoothscroll.js"></script>
-    <script src="script.js"></script>
+    <script src="script2.js"></script>
   </body>
 </html>
