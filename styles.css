@@ -22,6 +22,7 @@ html {
   justify-content: center;
   flex-direction: column;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 #fixer {
@@ -540,7 +541,9 @@ html {
   align-items: center;
   flex-direction: column;
   width: 80vw;
-  height: 300vh;
+  height: auto;
+  margin-top: 200vh;
+  padding-top: 100vh;
   margin: 0px;
 }
 
@@ -560,7 +563,7 @@ html {
 }
 
 #portfolioSelect {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   flex-direction: row;
@@ -578,6 +581,51 @@ html {
   background-color: white;
   margin: 20px;
   border-radius: 10px;
+}
+
+#skills {
+  z-index: 3;
+  width: 80vw;
+  height: auto;
+  min-height: 40vh;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 20px;
+  background-color: black;
+  padding: 30px;
+  margin-bottom: 50px;
+}
+
+#skills h1 {
+  align-self: center;
+  text-align: center;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  margin-bottom: 30px;
+}
+
+#skills h4 {
+  align-self: center;
+  text-align: center;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  margin: 30px;
+}
+
+#skills div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#skills div p {
+  background-color: rgb(36, 36, 36);
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin: 5px;
 }
 
 .option-tn {
@@ -601,4 +649,35 @@ html {
   background-position: center 0;
   z-index: 0;
   pointer-events: none;
+}
+
+#footer {
+  z-index: 2;
+  background-color: black;
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#footer div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#contacts {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+#trad,
+#socials {
+  width: 100px;
 }
