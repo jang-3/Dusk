@@ -10,7 +10,7 @@
     <script src="script.js" defer></script>
     <script src="https://unpkg.com/intersection-observer/intersection-observer.js"></script>
   </head>
-  <body>
+  <body id="body">
     <section class="normal-scroll-section" id="welcome">
       <div id="pc-up">
         <section id="parallax-container">
@@ -40,15 +40,79 @@
       </div>
       <div style="height: 5000px"></div>
     </section>
-    <div style="height: 200vh"></div>
-    <div id="portfolio-trigger"></div>
-    <div id="portfolioSelect"></div>
+    <div class="parallax-bg"></div>
 
-    <div id="portfolio-container">
-      <button onclick="goToNext()">Up</button>
-      <div id="portfolioDisplay"></div>
-      <button onclick="goToPrev()">down</button>
+    <div id="abt-me">
+      <div id="abt-me-wrapper">
+        <div id="img-of-me"></div>
+        <h4>JOSEPH ANG</h4>
+        <h1>
+          I'm a graphic designer and full-stack developer that specialises in
+          branding, UI/UX, and illustration.
+        </h1>
+        <p>
+          In my free time, I enjoy philosophy, chess, playing the piano and
+          cello.
+        </p>
+      </div>
     </div>
+    <div style="height: 1000px"></div>
+    <div id="portfolio-trigger"></div>
+    <div id="portfolio-container">
+      <h4>MY WORKS</h4>
+      <div id="portfolioDisplay"></div>
+      <div id="button-c">
+        <button onclick="goToNext()">Up</button>
+        <h1 id="selectedTitle">Title</h1>
+        <button onclick="goToPrev()">down</button>
+      </div>
+    </div>
+    <div id="work-ex">
+      <div class="one-wke">
+        <h4>2024-Present</h4>
+        <h1>Youth leader in Church</h1>
+        <p>Designed posters for church events.</p>
+      </div>
+      <div class="one-wke">
+        <h4>2023-Present</h4>
+        <h1>Logistics President at Amphibi Studios</h1>
+        <p>Managed logistical items for events</p>
+      </div>
+      <div class="one-wke">
+        <h4>January 2020 - Present</h4>
+        <h1>Took multiple paid graphic design commissions at 14 years old.</h1>
+        <p>
+          Designed logos, brandings, and website UIs. Designed the branding of
+          Retro Diffusion.
+        </p>
+      </div>
+      <div class="one-wke">
+        <h4>February 2022 - March 2022</h4>
+        <h1>Worked in an immersive media studio in Singapore YFC part time</h1>
+        <p>Created 3d art in VR</p>
+      </div>
+      <div class="one-wke">
+        <h4>September 2019 - October 2019</h4>
+        <h1>
+          Entered the Young Technopreneurs Competition at 13 by Temasek Holdings
+        </h1>
+        <p>
+          Entered the senior category (16-18 years old) as a special case.
+          Designed the UI and Logo, and pitched to the judges as a finalist of
+          the senior category. Won best pitch award.
+        </p>
+      </div>
+      <div class="one-wke">
+        <h4>July 2017 - August 2018</h4>
+        <h1>
+          Conducted a series of 10 scratch lessons to multicultural peers whilst
+          in America
+        </h1>
+        <p>One student's project received more than 2k+ likes</p>
+      </div>
+    </div>
+    <div style="height: 5000px"></div>
+    <div id="portfolioSelect"></div>
     <script src="smoothscroll.js"></script>
     <script src="script2.js"></script>
   </body>

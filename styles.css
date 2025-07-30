@@ -21,6 +21,7 @@ html {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  scroll-behavior: smooth;
 }
 
 #fixer {
@@ -500,15 +501,60 @@ html {
 }
 
 #abt-me {
+  margin-top: 1000px;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vh;
-  height: 100vh;
+  flex-direction: column;
+  width: 80vw;
+  height: 30vh;
 }
 
-#abt-me > * {
-  padding: 30px;
+#abt-me-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+#abt-me-wrapper h1 {
+  font-size: 50px;
+}
+
+#img-of-me {
+  width: 130px;
+  height: 170px;
+  background-image: url("JosephImg.jpeg");
+  background-position: center;
+  background-size: 150%;
+  margin-bottom: 10px;
+}
+
+#work-ex {
+  z-index: 2;
+  margin-top: 3000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80vw;
+  height: 300vh;
+  margin: 0px;
+}
+
+.one-wke {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.one-wke h1 {
+  font-size: 50px;
+  margin: 0px;
 }
 
 #portfolioSelect {
@@ -538,4 +584,19 @@ html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.parallax-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3000%;
+
+  background-image: url("BlackTile.png");
+  background-repeat: repeat-y;
+  background-size: 100% auto; /* 🔑 stretch image to full width */
+  background-position: center 0;
+  z-index: 0;
+  pointer-events: none;
 }

@@ -1,4 +1,4 @@
-$thumbnail https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg
+$thumbnail https://cdn.dribbble.com/userupload/39906184/file/original-4086c8e772232efc3f2721072d70fb48.png?resize=2048x1536&vertical=center
 
 $title This is a paragraph of text.
 

@@ -35,6 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
       container.style.width = "";
       container.style.height = "";
     }
+
+    const parallaxSpeed = 0.5; // 50% scroll speed
+    document.querySelector(".parallax-bg").style.backgroundPositionY = `${
+      -scrollY * parallaxSpeed
+    }px`;
   }
 
   window.addEventListener("scroll", updateScrollStyles);

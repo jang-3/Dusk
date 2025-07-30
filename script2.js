@@ -164,6 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // 🔍 Get filenames and divs
     const currentFile = portfolioIndex[index]?.name;
     const total = portfolioIndex.length;
+    const title = document.getElementById("selectedTitle");
+    const body = document.getElementById("body");
 
     const prevFile = portfolioIndex[(index - 1 + total) % total]?.name;
     const nextFile = portfolioIndex[(index + 1) % total]?.name;
@@ -174,12 +176,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ Apply styles if they exist
     if (currentDiv) {
+      title.textContent = currentFile.replace(".md", "").trim();
       currentDiv.style.display = "flex";
-      currentDiv.style.width = "85vw";
-      currentDiv.style.height = "85vh";
+      currentDiv.style.width = "90vw";
+      currentDiv.style.height = "80vh";
       currentDiv.style.opacity = "1";
       currentDiv.style.zIndex = "25";
-      currentDiv.style.background = "rgb(77, 65, 65)";
+      currentDiv.style.background = "rgb(27, 27, 27)";
+      currentDiv.style.transitionDelay = "0.1s";
 
       currentDiv
         .querySelectorAll("*")
@@ -197,6 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         e.stopPropagation();
         currentDiv.classList.add("fullscreen");
+        body.style.overflowY = "hidden";
 
         const backButton = document.createElement("button");
         backButton.textContent = "← Back";
@@ -206,6 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
           currentDiv.scrollTo({ top: 0, behavior: "smooth" });
           currentDiv.classList.remove("fullscreen");
           backButton.remove();
+          body.style.overflowY = "auto";
         });
 
         currentDiv.appendChild(backButton);
@@ -215,10 +221,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (prevDiv) {
       prevDiv.style.display = "flex";
       prevDiv.style.width = "50vw";
-      prevDiv.style.height = "50vh";
+      prevDiv.style.height = "80vh";
       prevDiv.style.opacity = "0";
       prevDiv.style.zIndex = "24";
       prevDiv.style.background = "transparent";
+      // prevDiv.style.transitionDelay = "0.4s";
 
       prevDiv
         .querySelectorAll("*")
@@ -227,11 +234,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (nextDiv) {
       nextDiv.style.display = "flex";
-      nextDiv.style.width = "90vw";
-      nextDiv.style.height = "90vh";
+      nextDiv.style.width = "95vw";
+      nextDiv.style.height = "80vh";
       nextDiv.style.opacity = "1";
       nextDiv.style.zIndex = "21";
-      nextDiv.style.background = "transparent";
+      // nextDiv.style.transitionDelay = "0.6s";
 
       // Hide content inside nextDiv
       nextDiv.querySelectorAll("*").forEach((el) => {
@@ -252,25 +259,54 @@ document.addEventListener("DOMContentLoaded", function () {
   populatePortfolioOptions(portfolio);
   portfolioIndexer();
 
+  let lastScrollTop = 0;
+  let scrollDirection = "down";
+
+  window.addEventListener("scroll", () => {
+    const st = window.pageYOffset || document.documentElement.scrollTop;
+    scrollDirection = st > lastScrollTop ? "down" : "up";
+    lastScrollTop = st <= 0 ? 0 : st; // Avoid negative
+  });
+
   const container = document.getElementById("portfolio-container");
   const trigger = document.getElementById("portfolio-trigger");
   const content = document.getElementById("portfolioDisplay");
+  const expand = document.getElementById("expand");
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          container.classList.add("active"); // slide up
+          container.style.display = "flex";
+          if (scrollDirection === "down") {
+            container.style.transform = "translateY(100%)"; // Start below view
+            requestAnimationFrame(() => {
+              container.classList.add("active");
+              container.style.transform = "translateY(0%)"; // Slide up
+            });
+          } else {
+            container.style.transform = "translateY(-100%)"; // Start above view
+            requestAnimationFrame(() => {
+              container.classList.add("active");
+              container.style.transform = "translateY(0%)"; // Slide down
+            });
+          }
           content.style.opacity = "1";
         } else {
-          container.classList.remove("active"); // slide down
+          if (scrollDirection === "down") {
+            container.style.transform = "translateY(-100%)"; // Slide out upward
+          } else {
+            container.style.transform = "translateY(100%)"; // Slide out downward
+          }
+          container.classList.remove("active");
           content.style.opacity = "0";
         }
       });
     },
     {
-      root: null, // viewport
-      threshold: 0.5, // trigger when 50% of #portfolio-trigger is visible
+      root: null,
+      threshold: 0.1,
+      rootMargin: "-100px 0px -100px 0px",
     }
   );
 
