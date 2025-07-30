@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
     "Monarch Butterfly.md",
     "Carne Curado Rebranding.md",
     "Retro Diffusion Branding.md",
+    "Beach Sunset.md",
+    "Ambivalence.md",
+    "Chess.com UI Contest.md",
+    "Bird of Paradise.md",
+    "Sunrise Summit.md",
+    "Taiga.md",
   ];
   const portfolioIndex = [];
 
