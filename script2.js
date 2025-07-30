@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const portfolio = [
     "Cave Waterfall.md",
-    "page2.md",
-    "page3.md",
-    "page4.md",
-    "page5.md",
-    "page6.md",
+    "Conscience.md",
+    "Immersive Media Branding.md",
+    "Monarch Butterfly.md",
+    "Carne Curado Rebranding.md",
+    "Retro Diffusion Branding.md",
   ];
   const portfolioIndex = [];
 
