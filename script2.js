@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "Bird of Paradise.md",
     "Sunrise Summit.md",
     "Taiga.md",
-    "ICT Fair.md",
+    "ICT Career Fair.md",
   ];
   const portfolioIndex = [];
 

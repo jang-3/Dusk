@@ -1,5 +1,5 @@
 $thumbnail https://res.cloudinary.com/do3bw1odu/image/upload/v1753890405/IMG_7860_ahbjqu.jpg
-$title ICT Fair
+$title ICT Career Fair
 
 $divider
 
