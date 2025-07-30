@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const portfolio = [
-    "page1.md",
+    "Cave Waterfall.md",
     "page2.md",
     "page3.md",
     "page4.md",
