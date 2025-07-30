@@ -10,7 +10,7 @@
     <script src="script.js" defer></script>
     <script src="https://unpkg.com/intersection-observer/intersection-observer.js"></script>
   </head>
-  <body onload="init()" defer>
+  <body>
     <section class="normal-scroll-section" id="welcome">
       <div id="pc-up">
         <section id="parallax-container">
@@ -41,13 +41,13 @@
       <div style="height: 5000px"></div>
     </section>
     <div style="height: 200vh"></div>
-    <div id="portfolioSelect"></div>
     <div id="portfolio-trigger"></div>
+    <div id="portfolioSelect"></div>
 
-    <button onclick="goToNext()">Up</button>
-    <button onclick="goToPrev()">down</button>
     <div id="portfolio-container">
+      <button onclick="goToNext()">Up</button>
       <div id="portfolioDisplay"></div>
+      <button onclick="goToPrev()">down</button>
     </div>
     <script src="smoothscroll.js"></script>
     <script src="script2.js"></script>

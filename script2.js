@@ -1,5 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const portfolio = ["page1.md", "page2.md", "page3.md", "page4.md"];
+  const portfolio = [
+    "page1.md",
+    "page2.md",
+    "page3.md",
+    "page4.md",
+    "page5.md",
+    "page6.md",
+  ];
   const portfolioIndex = [];
 
   async function portfolioIndexer() {
@@ -16,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentIndex = 0;
 
   function goToNext() {
+    const total = portfolioIndex.length;
     const nextIndex = (currentIndex + 1) % portfolioIndex.length;
     showOnlyDiv(portfolioIndex[nextIndex].name);
   }
@@ -80,38 +88,57 @@ document.addEventListener("DOMContentLoaded", function () {
     containerDiv.style.display = "none";
 
     const lines = text.split("\n");
+    const contentWrapper = document.createElement("div");
+    contentWrapper.classList.add("portfolio-content");
+
     for (const line of lines) {
       const trimmed = line.trim();
-      if (trimmed.startsWith("$text")) {
+
+      if (trimmed.startsWith("$thumbnail")) {
+        const url = trimmed.replace("$thumbnail", "").trim();
+        const thumb = document.createElement("div");
+        thumb.classList.add("portfolio-thumbnail");
+        thumb.style.backgroundImage = `url('${url}')`;
+        containerDiv.appendChild(thumb); // append thumbnail directly
+      } else if (trimmed.startsWith("$text")) {
         const p = document.createElement("p");
         p.textContent = trimmed.replace("$text", "").trim();
-        containerDiv.appendChild(p);
+        p.classList.add("portfolio-text");
+        contentWrapper.appendChild(p);
       } else if (trimmed.startsWith("$image")) {
         const img = document.createElement("img");
         img.src = trimmed.replace("$image", "").trim();
         img.alt = "Image";
         img.style.maxWidth = "100%";
-        containerDiv.appendChild(img);
+        img.classList.add("portfolio-image");
+        contentWrapper.appendChild(img);
       } else if (trimmed.startsWith("$divider")) {
         const hr = document.createElement("hr");
-        containerDiv.appendChild(hr);
+        hr.classList.add("portfolio-divider");
+        contentWrapper.appendChild(hr);
       } else if (trimmed.startsWith("$embed")) {
         const iframe = document.createElement("iframe");
         iframe.src = trimmed.replace("$embed", "").trim();
         iframe.width = 300;
         iframe.height = 200;
         iframe.allowFullscreen = true;
-        containerDiv.appendChild(iframe);
+        iframe.classList.add("portfolio-embed");
+        contentWrapper.appendChild(iframe);
       } else if (trimmed.startsWith("$title")) {
         const h2 = document.createElement("h2");
         h2.textContent = trimmed.replace("$title", "").trim();
-        containerDiv.appendChild(h2);
+        h2.classList.add("portfolio-title");
+        contentWrapper.appendChild(h2);
       } else if (trimmed !== "") {
         const p = document.createElement("p");
         p.textContent = trimmed;
-        containerDiv.appendChild(p);
+        p.classList.add("portfolio-paragraph");
+        contentWrapper.appendChild(p);
       }
     }
+
+    // Append the non-thumbnail content at the end
+    containerDiv.appendChild(contentWrapper);
 
     // Add fullscreen behavior
 
@@ -130,6 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // 🧹 Hide all divs first
     for (const div of divMap.values()) {
       div.style.display = "none";
+      div.style.height = "100vh";
+      div.style.width = "100vw";
     }
 
     // 🔍 Get filenames and divs
@@ -146,10 +175,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // ✅ Apply styles if they exist
     if (currentDiv) {
       currentDiv.style.display = "flex";
-      currentDiv.style.width = "80vw";
-      currentDiv.style.height = "80vh";
+      currentDiv.style.width = "85vw";
+      currentDiv.style.height = "85vh";
       currentDiv.style.opacity = "1";
-      currentDiv.style.zIndex = "5";
+      currentDiv.style.zIndex = "25";
+      currentDiv.style.background = "rgb(77, 65, 65)";
 
       currentDiv
         .querySelectorAll("*")
@@ -158,7 +188,13 @@ document.addEventListener("DOMContentLoaded", function () {
       currentDiv.onclick = null;
 
       currentDiv.onclick = (e) => {
-        if (currentDiv.classList.contains("fullscreen")) return;
+        // ✅ Only trigger fullscreen if a *child element* was clicked
+        if (
+          e.target === currentDiv ||
+          currentDiv.classList.contains("fullscreen")
+        )
+          return;
+
         e.stopPropagation();
         currentDiv.classList.add("fullscreen");
 
@@ -167,6 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
         backButton.classList.add("back-button");
         backButton.addEventListener("click", (ev) => {
           ev.stopPropagation();
+          currentDiv.scrollTo({ top: 0, behavior: "smooth" });
           currentDiv.classList.remove("fullscreen");
           backButton.remove();
         });
@@ -180,8 +217,8 @@ document.addEventListener("DOMContentLoaded", function () {
       prevDiv.style.width = "50vw";
       prevDiv.style.height = "50vh";
       prevDiv.style.opacity = "0";
-      prevDiv.style.zIndex = "4";
-      prevDiv.style.background = "grey";
+      prevDiv.style.zIndex = "24";
+      prevDiv.style.background = "transparent";
 
       prevDiv
         .querySelectorAll("*")
@@ -193,7 +230,8 @@ document.addEventListener("DOMContentLoaded", function () {
       nextDiv.style.width = "90vw";
       nextDiv.style.height = "90vh";
       nextDiv.style.opacity = "1";
-      nextDiv.style.zIndex = "1";
+      nextDiv.style.zIndex = "21";
+      nextDiv.style.background = "transparent";
 
       // Hide content inside nextDiv
       nextDiv.querySelectorAll("*").forEach((el) => {
@@ -216,14 +254,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const container = document.getElementById("portfolio-container");
   const trigger = document.getElementById("portfolio-trigger");
+  const content = document.getElementById("portfolioDisplay");
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           container.classList.add("active"); // slide up
+          content.style.opacity = "1";
         } else {
           container.classList.remove("active"); // slide down
+          content.style.opacity = "0";
         }
       });
     },
