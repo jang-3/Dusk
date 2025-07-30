@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="normalize.css" />
     <script src="script.js" defer></script>
     <script src="https://unpkg.com/intersection-observer/intersection-observer.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body id="body">
     <section class="normal-scroll-section" id="welcome">
@@ -62,9 +68,13 @@
       <h4>MY WORKS</h4>
       <div id="portfolioDisplay"></div>
       <div id="button-c">
-        <button onclick="goToNext()">Up</button>
+        <button class="arrow-button" onclick="goToPrev()"></button>
         <h1 id="selectedTitle">Title</h1>
-        <button onclick="goToPrev()">down</button>
+        <button
+          class="arrow-button"
+          style="transform: scaleX(-1)"
+          onclick="goToNext()"
+        ></button>
       </div>
     </div>
     <div id="work-ex">

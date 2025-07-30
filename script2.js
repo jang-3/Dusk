@@ -202,6 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.stopPropagation();
         currentDiv.classList.add("fullscreen");
         body.style.overflowY = "hidden";
+        currentDiv.style.background = "solid black";
 
         const backButton = document.createElement("button");
         backButton.textContent = "← Back";

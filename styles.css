@@ -519,7 +519,8 @@ html {
 }
 
 #abt-me-wrapper h1 {
-  font-size: 50px;
+  font-size: 55px;
+  font-weight: 600;
 }
 
 #img-of-me {
@@ -553,7 +554,8 @@ html {
 }
 
 .one-wke h1 {
-  font-size: 50px;
+  font-size: 55px;
+  font-weight: 600;
   margin: 0px;
 }
 
