@@ -659,10 +659,14 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.5s ease-in-out;
 }
 
-#footer div {
-  width: 100%;
+#footer-wrap h1 {
+  font-size: 130px;
+}
+
+#footer-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -679,5 +683,24 @@ html {
 
 #trad,
 #socials {
-  width: 100px;
+  width: 300px;
+}
+
+#linkedin {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* Remove blue or purple colors on hover/visited */
+#linkedin:link,
+#linkedin:visited {
+  color: white;
 }

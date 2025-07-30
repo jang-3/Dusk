@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   const root = document.documentElement;
   const bottom = document.getElementById("duskfall-bottom");
   const skyblue = document.getElementById("sky-blue");

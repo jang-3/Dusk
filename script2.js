@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "Bird of Paradise.md",
     "Sunrise Summit.md",
     "Taiga.md",
+    "ICT Fair.md",
   ];
   const portfolioIndex = [];
 
@@ -207,7 +208,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         e.stopPropagation();
         currentDiv.classList.add("fullscreen");
-        body.style.overflowY = "hidden";
+        document.documentElement.style.overflow = "hidden"; // html
+        document.body.style.overflow = "hidden"; // body
         currentDiv.style.background = "solid black";
 
         const backButton = document.createElement("button");
@@ -218,7 +220,8 @@ document.addEventListener("DOMContentLoaded", function () {
           currentDiv.scrollTo({ top: 0, behavior: "smooth" });
           currentDiv.classList.remove("fullscreen");
           backButton.remove();
-          body.style.overflowY = "auto";
+          document.documentElement.style.overflow = "";
+          document.body.style.overflow = "";
         });
 
         currentDiv.appendChild(backButton);
